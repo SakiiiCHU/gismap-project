@@ -10,7 +10,9 @@ const dataCache = {
 // Load JSON data from public/map/ directory
 async function loadJsonData(filename) {
   try {
-    const response = await fetch(`/map/${filename}`)
+    const base = import.meta.env.BASE_URL || "/" // 自動判斷是 dev or prod
+
+    const response = await fetch(`${base}map/${filename}`)
     if (!response.ok) {
       throw new Error(`Failed to load ${filename}`)
     }
