@@ -3,8 +3,8 @@
   width: 100vw;
   position: relative;
   overflow: hidden;
-  margin-top: 80px;
-  height: calc(100vh - 80px);
+  margin-top: 50px;
+  height: calc(100vh - 50px);
 }
 
 /* 地圖區域滿版鋪底 */
