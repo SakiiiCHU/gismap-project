@@ -58,12 +58,14 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const base = import.meta.env.BASE_URL
+
         setIsLoading(true)
         const [routesRes, lineStationsRes, shortestPathsRes, districtsRes] = await Promise.all([
-          fetch("/map/TPE_MRT_ROUTE_4326.geojson"),
-          fetch("/map/TPE_metroLineStation.json"),
-          fetch("/map/shortestPath_wgs84.geojson"),
-          fetch("/map/TPE_Dist_4326.geojson"),
+          fetch(base + "/map/TPE_MRT_ROUTE_4326.geojson"),
+          fetch(base + "/map/TPE_metroLineStation.json"),
+          fetch(base + "/map/shortestPath_wgs84.geojson"),
+          fetch(base + "/map/TPE_Dist_4326.geojson"),
         ])
 
         const routesData = await routesRes.json()

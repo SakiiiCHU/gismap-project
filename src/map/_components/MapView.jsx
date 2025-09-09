@@ -75,10 +75,12 @@ const MapView = ({
   useEffect(() => {
     const loadStaticData = async () => {
       try {
+        const base = import.meta.env.BASE_URL
+
         const [realLocationsRes, exhibitionsRes, coursesRes] = await Promise.all([
-          fetch("/map/real_location.json"),
-          fetch("/map/exhibition.json"),
-          fetch("/map/courses.json"),
+          fetch(base + "map/real_location.json"),
+          fetch(base + "map/exhibition.json"),
+          fetch(base + "map/courses.json"),
         ])
 
         const realLocations = await realLocationsRes.json()
