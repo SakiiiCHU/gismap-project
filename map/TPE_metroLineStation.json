@@ -1,0 +1,803 @@
+{
+    "mrt_lines": [
+        {
+            "line": "淡水信義線",
+            "stations": [
+                {
+                    "station_id": "R22A",
+                    "name_chinese": "新北投站",
+                    "name_english": "Xinbeitou",
+                    "coordinates": {
+                        "longitude": 121.50253117138534,
+                        "latitude": 25.136936401899067
+                    }
+                },
+                {
+                    "station_id": "R27",
+                    "name_chinese": "關渡站",
+                    "name_english": "Guandu",
+                    "coordinates": {
+                        "longitude": 121.46719972493716,
+                        "latitude": 25.125784713139588
+                    }
+                },
+                {
+                    "station_id": "R24",
+                    "name_chinese": "忠義站",
+                    "name_english": "Zhongyi",
+                    "coordinates": {
+                        "longitude": 121.4731222409703,
+                        "latitude": 25.13075088521668
+                    }
+                },
+                {
+                    "station_id": "R23",
+                    "name_chinese": "復興崗站",
+                    "name_english": "Fuxinggang",
+                    "coordinates": {
+                        "longitude": 121.48520813535161,
+                        "latitude": 25.137446811852804
+                    }
+                },
+                {
+                    "station_id": "R22",
+                    "name_chinese": "北投站",
+                    "name_english": "Beitou",
+                    "coordinates": {
+                        "longitude": 121.49859115986241,
+                        "latitude": 25.131907048775716
+                    }
+                },
+                {
+                    "station_id": "R21",
+                    "name_chinese": "奇岩站",
+                    "name_english": "Qiyan",
+                    "coordinates": {
+                        "longitude": 121.50108298243138,
+                        "latitude": 25.125584855497433
+                    }
+                },
+                {
+                    "station_id": "R20",
+                    "name_chinese": "唭哩岸站",
+                    "name_english": "Qilian",
+                    "coordinates": {
+                        "longitude": 121.5062648104665,
+                        "latitude": 25.12085794562379
+                    }
+                },
+                {
+                    "station_id": "R19",
+                    "name_chinese": "石牌站",
+                    "name_english": "Shipai",
+                    "coordinates": {
+                        "longitude": 121.51564228487027,
+                        "latitude": 25.114420305321463
+                    }
+                },
+                {
+                    "station_id": "R18",
+                    "name_chinese": "明德站",
+                    "name_english": "Mingde",
+                    "coordinates": {
+                        "longitude": 121.51882040916377,
+                        "latitude": 25.10979393588559
+                    }
+                },
+                {
+                    "station_id": "R17",
+                    "name_chinese": "芝山站",
+                    "name_english": "Zhishan",
+                    "coordinates": {
+                        "longitude": 121.52254228458312,
+                        "latitude": 25.10281102722776
+                    }
+                },
+                {
+                    "station_id": "R16",
+                    "name_chinese": "士林站",
+                    "name_english": "Shilin",
+                    "coordinates": {
+                        "longitude": 121.52619154203938,
+                        "latitude": 25.093473979666292
+                    }
+                },
+                {
+                    "station_id": "R15",
+                    "name_chinese": "劍潭站",
+                    "name_english": "Jiantan",
+                    "coordinates": {
+                        "longitude": 121.52496914164323,
+                        "latitude": 25.084236417468688
+                    }
+                },
+                {
+                    "station_id": "R14",
+                    "name_chinese": "圓山站",
+                    "name_english": "Yuanshan",
+                    "coordinates": {
+                        "longitude": 121.52013178478053,
+                        "latitude": 25.071380222093712
+                    }
+                },
+                {
+                    "station_id": "R13",
+                    "name_chinese": "民權西路站",
+                    "name_english": "Minquan West Road",
+                    "coordinates": {
+                        "longitude": 121.51936274027929,
+                        "latitude": 25.062876665363373
+                    }
+                },
+                {
+                    "station_id": "R12",
+                    "name_chinese": "雙連站",
+                    "name_english": "Shuanglian",
+                    "coordinates": {
+                        "longitude": 121.52070999301614,
+                        "latitude": 25.057646860243775
+                    }
+                },
+                {
+                    "station_id": "R11",
+                    "name_chinese": "中山站",
+                    "name_english": "Zhongshan",
+                    "coordinates": {
+                        "longitude": 121.52039689994804,
+                        "latitude": 25.052675664748175
+                    }
+                },
+                {
+                    "station_id": "R10",
+                    "name_chinese": "台北車站",
+                    "name_english": "Taipei Main Station",
+                    "coordinates": {
+                        "longitude": 121.517438024645301,
+                        "latitude": 25.046233083441123
+                    }
+                },
+                {
+                    "station_id": "R09",
+                    "name_chinese": "台大醫院站",
+                    "name_english": "National Taiwan University Hospital",
+                    "coordinates": {
+                      "longitude": 121.516220077324292,
+                      "latitude": 25.041827029154888
+                  }
+                },
+                {
+                    "station_id": "R08",
+                    "name_chinese": "中正紀念堂站",
+                    "name_english": "Chiang Kai-Shek Memorial Hall",
+                    "coordinates": {
+                        "longitude": 121.51704931955275,
+                        "latitude": 25.03427427019356
+                    }
+                },
+                {
+                    "station_id": "R07",
+                    "name_chinese": "東門站",
+                    "name_english": "Dongmen",
+                    "coordinates": {
+                        "longitude": 121.52832177315834,
+                        "latitude": 25.033927618168192
+                    }
+                },
+                {
+                    "station_id": "R06",
+                    "name_chinese": "大安森林公園站",
+                    "name_english": "Daan Park",
+                    "coordinates": {
+                        "longitude": 121.5353080284314,
+                        "latitude": 25.033535251073033
+                    }
+                },
+                {
+                    "station_id": "R05",
+                    "name_chinese": "大安站",
+                    "name_english": "Daan",
+                    "coordinates": {
+                        "longitude": 121.5436261083644,
+                        "latitude": 25.0328205730737
+                    }
+                },
+                {
+                    "station_id": "R04",
+                    "name_chinese": "信義安和站",
+                    "name_english": "Xinyi Anhe",
+                    "coordinates": {
+                        "longitude": 121.55323253075672,
+                        "latitude": 25.03315004254659
+                    }
+                },
+                {
+                    "station_id": "R03",
+                    "name_chinese": "台北101世貿站",
+                    "name_english": "Taipei 101/World Trade Center",
+                    "coordinates": {
+                      "longitude": 121.55323253075672,
+                      "latitude": 25.03315004254659
+                  }
+                },
+                {
+                    "station_id": "R02",
+                    "name_chinese": "象山站",
+                    "name_english": "Xiangshan",
+                    "coordinates": {
+                        "longitude": 121.563490094538835, 
+                        "latitude": 25.032979479154871
+                    }
+                }
+            ]
+        },
+        {
+            "line": "松山新店線",
+            "stations": [
+                {
+                    "station_id": "G19",
+                    "name_chinese": "松山站",
+                    "name_english": "Songshan",
+                    "coordinates": {
+                        "longitude": 121.57773339237647,
+                        "latitude": 25.050001706485414
+                    }
+                },
+                {
+                    "station_id": "G18",
+                    "name_chinese": "南京三民站",
+                    "name_english": "Nanjing Sanmin",
+                    "coordinates": {
+                        "longitude": 121.5643968828404,
+                        "latitude": 25.05143632091201
+                    }
+                },
+                {
+                    "station_id": "G17",
+                    "name_chinese": "台北小巨蛋站",
+                    "name_english": "Taipei Arena",
+                    "coordinates": {
+                        "longitude": 121.55200315528758,
+                        "latitude": 25.051647242186373
+                    }
+                },
+                {
+                    "station_id": "G16",
+                    "name_chinese": "南京復興站",
+                    "name_english": "Nanjing Fuxing",
+                    "coordinates": {
+                        "longitude": 121.54403933590369,
+                        "latitude": 25.052292279432056
+                    }
+                },
+                {
+                    "station_id": "G15",
+                    "name_chinese": "松江南京站",
+                    "name_english": "Songjiang Nanjing",
+                    "coordinates": {
+                        "longitude": 121.53304925954893,
+                        "latitude": 25.052024514344147
+                    }
+                },
+                {
+                    "station_id": "G14",
+                    "name_chinese": "中山站",
+                    "name_english": "Zhongshan",
+                    "coordinates": {
+                        "longitude": 121.52039689994804,
+                        "latitude": 25.052675664748175
+                    }
+                },
+                {
+                    "station_id": "G13",
+                    "name_chinese": "北門站",
+                    "name_english": "Beimen",
+                    "coordinates": {
+                        "longitude": 121.5102786459113,
+                        "latitude": 25.049294237623993
+                    }
+                },
+                {
+                    "station_id": "G12",
+                    "name_chinese": "西門",
+                    "name_english": "Ximen",
+                    "coordinates": {
+                        "longitude": 121.50848773359857,
+                        "latitude": 25.042212597087047
+                    }
+                },
+                {
+                    "station_id": "G11",
+                    "name_chinese": "小南門站",
+                    "name_english": "Xiaonanmen",
+                    "coordinates": {
+                        "longitude": 121.510781764249,
+                        "latitude": 25.035672778690685
+                    }
+                },
+                {
+                    "station_id": "G10",
+                    "name_chinese": "中正紀念堂站",
+                    "name_english": "Chiang Kai-Shek Memorial Hall",
+                    "coordinates": {
+                        "longitude": 121.51704931955275,
+                        "latitude": 25.03427427019356
+                    }
+                },
+                {
+                    "station_id": "G09",
+                    "name_chinese": "古亭站",
+                    "name_english": "Guting",
+                    "coordinates": {
+                        "longitude": 121.52256794084464,
+                        "latitude": 25.026885634859767
+                    }
+                },
+                {
+                    "station_id": "G08",
+                    "name_chinese": "台電大樓站",
+                    "name_english": "Taipower Building",
+                    "coordinates": {
+                        "longitude": 121.52818732580072,
+                        "latitude": 25.02069268144765
+                    }
+                },
+                {
+                    "station_id": "G07",
+                    "name_chinese": "公館站",
+                    "name_english": "Gongguan",
+                    "coordinates": {
+                        "longitude": 121.53434703188556,
+                        "latitude": 25.01470748237314
+                    }
+                },
+                {
+                    "station_id": "G06",
+                    "name_chinese": "萬隆站",
+                    "name_english": "Wanlong",
+                    "coordinates": {
+                        "longitude": 121.53900226954173,
+                        "latitude": 25.001965325198682
+                    }
+                },
+                {
+                    "station_id": "G05",
+                    "name_chinese": "景美站",
+                    "name_english": "Jingmei",
+                    "coordinates": {
+                        "longitude": 121.5409209921252,
+                        "latitude": 24.993178356596204
+                    }
+                }
+            ]
+        },
+        {
+            "line": "板南線",
+            "stations": [
+                {
+                    "station_id": "BL23",
+                    "name_chinese": "南港展覽館站",
+                    "name_english": "Taipei Nangang Exhibition Center",
+                    "coordinates": {
+                        "longitude": 121.61762249277858,
+                        "latitude": 25.0545656791777
+                    }
+                },
+                {
+                    "station_id": "BL22",
+                    "name_chinese": "南港站",
+                    "name_english": "Nangang",
+                    "coordinates": {
+                        "longitude": 121.60763420834738,
+                        "latitude": 25.052178378321834
+                    }
+                },
+                {
+                    "station_id": "BL21",
+                    "name_chinese": "昆陽站",
+                    "name_english": "Kunyang",
+                    "coordinates": {
+                        "longitude": 121.5930201123863,
+                        "latitude": 25.050188656620406
+                    }
+                },
+                {
+                    "station_id": "BL20",
+                    "name_chinese": "後山埤站",
+                    "name_english": "Houshanpi",
+                    "coordinates": {
+                        "longitude": 121.58200407698276,
+                        "latitude": 25.044278553628136
+                    }
+                },
+                {
+                    "station_id": "BL19",
+                    "name_chinese": "永春站",
+                    "name_english": "Yongchun",
+                    "coordinates": {
+                        "longitude": 121.57587285864736,
+                        "latitude": 25.040863616679307
+                    }
+                },
+                {
+                    "station_id": "BL18",
+                    "name_chinese": "市政府站",
+                    "name_english": "Taipei City Hall",
+                    "coordinates": {
+                        "longitude": 121.5652594540565,
+                        "latitude": 25.04117889109046
+                    }
+                },
+                {
+                    "station_id": "BL17",
+                    "name_chinese": "國父紀念館站",
+                    "name_english": "Sun Yat-Sen Memorial Hall",
+                    "coordinates": {
+                        "longitude": 121.5576889492678,
+                        "latitude": 25.04134746745301
+                    }
+                },
+                {
+                    "station_id": "BL16",
+                    "name_chinese": "忠孝敦化站",
+                    "name_english": "Zhongxiao Dunhua",
+                    "coordinates": {
+                        "longitude": 121.54965595628077,
+                        "latitude": 25.04149480094372
+                    }
+                },
+                {
+                    "station_id": "BL15",
+                    "name_chinese": "忠孝復興站",
+                    "name_english": "Zhongxiao Fuxing",
+                    "coordinates": {
+                        "longitude": 121.54379399916067,
+                        "latitude": 25.041602162432408
+                    }
+                },
+                {
+                    "station_id": "BL14",
+                    "name_chinese": "忠孝新生站",
+                    "name_english": "Zhongxiao Xinsheng",
+                    "coordinates": {
+                        "longitude": 121.53291875841308,
+                        "latitude": 25.042354841091935
+                    }
+                },
+                {
+                    "station_id": "BL13",
+                    "name_chinese": "善導寺站",
+                    "name_english": "Shandao Temple",
+                    "coordinates": {
+                        "longitude": 121.5233401885831,
+                        "latitude": 25.044813009018718
+                    }
+                },
+                {
+                    "station_id": "BL12",
+                    "name_chinese": "台北車站",
+                    "name_english": "Taipei Main Station",
+                    "coordinates": {
+                      "longitude": 121.517438024645301,
+                      "latitude": 25.046233083441123
+                  }
+                },
+                {
+                    "station_id": "BL11",
+                    "name_chinese": "西門站",
+                    "name_english": "Ximen",
+                    "coordinates": {
+                        "longitude": 121.50848773359857,
+                        "latitude": 25.042212597087047
+                    }
+                },
+                {
+                    "station_id": "BL10",
+                    "name_chinese": "龍山寺站",
+                    "name_english": "Longshan Temple",
+                    "coordinates": {
+                        "longitude": 121.50122086189029,
+                        "latitude": 25.035229130503154
+                    }
+                }
+            ]
+        },
+        {
+            "line": "文湖線",
+            "stations": [
+                {
+                    "station_id": "BR24",
+                    "name_chinese": "南港展覽館站",
+                    "name_english": "Taipei Nangang Exhibition Center",
+                    "coordinates": {
+                        "longitude": 121.61762249277858,
+                        "latitude": 25.0545656791777
+                    }
+                },
+                {
+                    "station_id": "BR23",
+                    "name_chinese": "南港軟體園區站",
+                    "name_english": "Nangang Software Park",
+                    "coordinates": {
+                        "longitude": 121.61595418159499,
+                        "latitude": 25.0598989938964
+                    }
+                },
+                {
+                    "station_id": "BR22",
+                    "name_chinese": "東湖站",
+                    "name_english": "Donghu",
+                    "coordinates": {
+                        "longitude": 121.61173723205351,
+                        "latitude": 25.06757795298427
+                    }
+                },
+                {
+                    "station_id": "BR21",
+                    "name_chinese": "葫洲站",
+                    "name_english": "Huzhou",
+                    "coordinates": {
+                        "longitude": 121.60724154576957,
+                        "latitude": 25.072689271218774
+                    }
+                },
+                {
+                    "station_id": "BR20",
+                    "name_chinese": "大湖公園站",
+                    "name_english": "Dahu Park",
+                    "coordinates": {
+                        "longitude": 121.6023129070467,
+                        "latitude": 25.08380866638897
+                    }
+                },
+                {
+                    "station_id": "BR19",
+                    "name_chinese": "內湖站",
+                    "name_english": "Neihu",
+                    "coordinates": {
+                        "longitude": 121.59420587019453,
+                        "latitude": 25.083505565019827
+                    }
+                },
+                {
+                    "station_id": "BR18",
+                    "name_chinese": "文德站",
+                    "name_english": "Wende",
+                    "coordinates": {
+                        "longitude": 121.58496851543221,
+                        "latitude": 25.07853310626853
+                    }
+                },
+                {
+                    "station_id": "BR17",
+                    "name_chinese": "港墘站",
+                    "name_english": "Gangqian",
+                    "coordinates": {
+                        "longitude": 121.57528311843348,
+                        "latitude": 25.079995003678402
+                    }
+                },
+                {
+                    "station_id": "BR16",
+                    "name_chinese": "西湖站",
+                    "name_english": "Xihu",
+                    "coordinates": {
+                        "longitude": 121.5672124577793,
+                        "latitude": 25.08216141473821
+                    }
+                },
+                {
+                    "station_id": "BR15",
+                    "name_chinese": "劍南路站",
+                    "name_english": "Jiannan Road",
+                    "coordinates": {
+                        "longitude": 121.55560715358948,
+                        "latitude": 25.08489845647162
+                    }
+                },
+                {
+                    "station_id": "BR14",
+                    "name_chinese": "大直站",
+                    "name_english": "Dazhi",
+                    "coordinates": {
+                        "longitude": 121.54814855983457,
+                        "latitude": 25.080477334160324
+                    }
+                },
+                {
+                    "station_id": "BR13",
+                    "name_chinese": "松山機場站",
+                    "name_english": "Songshan Airport",
+                    "coordinates": {
+                        "longitude": 121.55163511046534,
+                        "latitude": 25.063104462027813
+                    }
+                },
+                {
+                    "station_id": "BR12",
+                    "name_chinese": "中山國中站",
+                    "name_english": "Zhongshan Junior High School",
+                    "coordinates": {
+                        "longitude": 121.54421643863033,
+                        "latitude": 25.06080611270273
+                    }
+                },
+                {
+                    "station_id": "BR11",
+                    "name_chinese": "南京復興站",
+                    "name_english": "Nanjing Fuxing",
+                    "coordinates": {
+                        "longitude": 121.54403933590369,
+                        "latitude": 25.052292279432056
+                    }
+                },
+                {
+                    "station_id": "BR10",
+                    "name_chinese": "忠孝復興站",
+                    "name_english": "Zhongxiao Fuxing",
+                    "coordinates": {
+                        "longitude": 121.54379399916067,
+                        "latitude": 25.041602162432408
+                    }
+                },
+                {
+                    "station_id": "BR09",
+                    "name_chinese": "大安站",
+                    "name_english": "Daan",
+                    "coordinates": {
+                        "longitude": 121.5436261083644,
+                        "latitude": 25.0328205730737
+                    }
+                },
+                {
+                    "station_id": "BR08",
+                    "name_chinese": "科技大樓站",
+                    "name_english": "Technology Building",
+                    "coordinates": {
+                        "longitude": 121.54345147194539,
+                        "latitude": 25.025991976477005
+                    }
+                },
+                {
+                    "station_id": "BR07",
+                    "name_chinese": "六張犁站",
+                    "name_english": "Liuzhangli",
+                    "coordinates": {
+                        "longitude": 121.55305797318083,
+                        "latitude": 25.023844875733175
+                    }
+                },
+                {
+                    "station_id": "BR06",
+                    "name_chinese": "麟光站",
+                    "name_english": "Linguang",
+                    "coordinates": {
+                        "longitude": 121.55882703203744,
+                        "latitude": 25.018523230734115
+                    }
+                },
+                {
+                    "station_id": "BR05",
+                    "name_chinese": "辛亥站",
+                    "name_english": "Xinhai",
+                    "coordinates": {
+                        "longitude": 121.55701024355297,
+                        "latitude": 25.005383562847964
+                    }
+                },
+                {
+                    "station_id": "BR04",
+                    "name_chinese": "萬芳醫院站",
+                    "name_english": "Wanfang Hospital",
+                    "coordinates": {
+                        "longitude": 121.55802856133452,
+                        "latitude": 24.999504452038764
+                    }
+                },
+                {
+                    "station_id": "BR03",
+                    "name_chinese": "萬芳社區站",
+                    "name_english": "Wanfang Community",
+                    "coordinates": {
+                        "longitude": 121.56806667867862,
+                        "latitude": 24.998607713500114
+                    }
+                },
+                {
+                    "station_id": "BR02",
+                    "name_chinese": "木柵站",
+                    "name_english": "Muzha",
+                    "coordinates": {
+                        "longitude": 121.57317598186135,
+                        "latitude": 24.998253352528412
+                    }
+                },
+                {
+                    "station_id": "BR01",
+                    "name_chinese": "動物園站",
+                    "name_english": "Taipei Zoo",
+                    "coordinates": {
+                        "longitude": 121.57932507629135,
+                        "latitude": 24.99827748528025
+                    }
+                }
+            ]
+        },
+        {
+            "line": "中和新蘆線",
+            "stations": [
+                {
+                    "station_id": "O12",
+                    "name_chinese": "大橋頭站",
+                    "name_english": "Daqiaotou",
+                    "coordinates": {
+                        "longitude": 121.51284877945061,
+                        "latitude": 25.062922384403873
+                    }
+                },
+                {
+                    "station_id": "O11",
+                    "name_chinese": "民權西路站",
+                    "name_english": "Minquan West Road",
+                    "coordinates": {
+                        "longitude": 121.51936274027929,
+                        "latitude": 25.062876665363373
+                    }
+                },
+                {
+                    "station_id": "O10",
+                    "name_chinese": "中山國小站",
+                    "name_english": "Zhongshan Elementary School",
+                    "coordinates": {
+                        "longitude": 121.5276644722842,
+                        "latitude": 25.062650999595398
+                    }
+                },
+                {
+                    "station_id": "O09",
+                    "name_chinese": "行天宮站",
+                    "name_english": "Xingtian Temple",
+                    "coordinates": {
+                        "longitude": 121.53315637381542,
+                        "latitude": 25.057966034949423
+                    }
+                },
+                {
+                    "station_id": "O08",
+                    "name_chinese": "松江南京站",
+                    "name_english": "Songjiang Nanjing",
+                    "coordinates": {
+                        "longitude": 121.53304925954893,
+                        "latitude": 25.052024514344147
+                    }
+                },
+                {
+                    "station_id": "O07",
+                    "name_chinese": "忠孝新生站",
+                    "name_english": "Zhongxiao Xinsheng",
+                    "coordinates": {
+                        "longitude": 121.53291875841308,
+                        "latitude": 25.042354841091935
+                    }
+                },
+                {
+                    "station_id": "O06",
+                    "name_chinese": "東門站",
+                    "name_english": "Dongmen",
+                    "coordinates": {
+                        "longitude": 121.52832177315834,
+                        "latitude": 25.033927618168192
+                    }
+                },
+                {
+                    "station_id": "O05",
+                    "name_chinese": "古亭站",
+                    "name_english": "Guting",
+                    "coordinates": {
+                        "longitude": 121.52256794084464,
+                        "latitude": 25.026885634859767
+                    }
+                }
+            ]
+        }
+    ]
+}
