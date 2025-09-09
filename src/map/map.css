@@ -1,0 +1,142 @@
+/* 頁面最外層，滿版設定 */
+.map-page-wrapper {
+  width: 100vw;
+  position: relative;
+  overflow: hidden;
+  margin-top: 80px;
+  height: calc(100vh - 80px);
+}
+
+/* 地圖區域滿版鋪底 */
+.map-content {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+/* Map 容器 */
+.map-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Loading 樣式 */
+.map-loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #000;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* FilterPanel 浮動黑底透明框 */
+.filter-panel {
+  background: rgba(130, 128, 128, 0.5);
+  border: 1px solid #e5e7eb;
+  backdrop-filter: blur(10px); /* 模糊背景 */
+  border-radius: 16px;
+  padding: 20px;
+  /* box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2); */
+  color: #f3f4f6;
+  width: 300px;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  line-height: 1.6; /* 增加舒適度 */
+}
+
+/* FilterResults 浮動框（可依需求調整位置） */
+.filter-results {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(6px);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  max-height: 40vh;
+  width: 280px;
+  overflow-y: auto;
+  font-size: 14px;
+}
+
+/* FilterResults 容器結構 */
+.filter-results-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.results-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+}
+
+/* 手機版 RWD */
+@media (max-width: 768px) {
+  .filter-panel {
+    padding: 16px;
+    top: 16px;
+    /* left: 50%; */
+    /* transform: translateX(-50%); */
+  }
+
+  .filter-results {
+    width: 90vw;
+    max-width: 360px;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* Global styles for the map application */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", sans-serif;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}

@@ -1,0 +1,227 @@
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.filter-header h2 {
+  font-size: 1rem;
+  font-weight: 300;
+  color: #333;
+}
+
+.clear-all {
+  font-size: 0.875rem;
+  color: #666;
+  border: 1px solid #e0e0e0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-all:hover {
+  background-color: #f0f0f0;
+}
+
+.filter-section {
+  margin-bottom: 0.5rem;
+}
+
+.filter-section p {
+  margin-bottom: 0.75rem;
+  font-size: 0.875rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.filter-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.filter-button {
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #000;
+  border-radius: 9999px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.filter-button:hover {
+  background-color: #f8f8f8;
+}
+
+.filter-button.active {
+  background-color: #000;
+  color: #fff;
+  border-color: #000;
+}
+
+.dropdown-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.price-range {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.price-range input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #000;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.price-range span {
+  color: #666;
+  font-size: 0.875rem;
+}
+
+.apply-button {
+  width: 100%;
+  padding: 10px 16px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+  height: 40px;
+}
+
+.apply-button:hover:not(:disabled) {
+  background-color: #333;
+}
+
+.apply-button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+.filter-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.data-type-tabs,
+.filter-type-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tab-button {
+  flex: 1;
+  padding: 8px 16px;
+  border: 1.5px solid #000;
+  border-radius: 20px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.tab-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+  background-color: #000;
+  color: white;
+}
+
+.filter-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #000;
+  border-radius: 20px;
+  background: white;
+  color: black;
+  font-size: 14px;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+  margin-bottom: 12px;
+}
+
+.filter-select:focus {
+  outline: none;
+  border-color: #333;
+}
+
+/* Hero UI specific styles */
+.filter-panel .heroui-select,
+.filter-panel .heroui-datepicker {
+  width: 100%;
+}
+
+.filter-panel .heroui-select-trigger,
+.filter-panel .heroui-datepicker-input {
+  border-radius: 9999px !important;
+  height: 40px !important;
+  border-color: #000 !important;
+}
+
+.filter-panel .heroui-select-trigger:hover,
+.filter-panel .heroui-datepicker-input:hover {
+  border-color: #000 !important;
+}
+
+.filter-panel .heroui-select-trigger:focus,
+.filter-panel .heroui-datepicker-input:focus {
+  border-color: #000 !important;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) !important;
+}
+
+.filter-panel .heroui-datepicker-inputWrapper {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.filter-panel .heroui-datepicker {
+  width: 100%;
+}
+
+.filter-panel .heroui-datepicker-input {
+  border: 1.5px solid #000 !important;
+  border-radius: 9999px !important;
+  height: 40px !important;
+  background-color: transparent !important;
+  transition: all 0.2s ease !important;
+}
+
+.filter-panel .heroui-datepicker-input:hover {
+  border-color: #000 !important;
+}
+
+.filter-panel .heroui-datepicker-input:focus {
+  border-color: #000 !important;
+  box-shadow: none !important;
+}
+
+.filter-panel .heroui-datepicker-inputWrapper {
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.filter-panel .heroui-datepicker-calendar {
+  border-color: #000 !important;
+}
