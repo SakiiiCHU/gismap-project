@@ -2,7 +2,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.5rem;
 }
 
 .filter-header h2 {
@@ -21,136 +20,57 @@
   cursor: pointer;
   transition: all 0.2s ease;
 }
+.clear-all:hover { background-color: #f0f0f0; }
 
-.clear-all:hover {
-  background-color: #f0f0f0;
-}
-
+/* --- Section 基本間距 --- */
 .filter-section {
-  margin-bottom: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
 }
+.filter-section:last-child { margin-bottom: 0; }
 
 .filter-section p {
-  margin-bottom: 0.75rem;
   font-size: 0.875rem;
   color: #666;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  margin-bottom: 6px; /* 控制標題與內容距離 */
 }
 
+/* --- Buttons --- */
 .filter-buttons {
   display: flex;
   gap: 0.5rem;
 }
-
 .filter-button {
-  padding: 0.75rem 1rem;
+  flex: 1;
+  height: 40px;
+  padding: 0 14px;
   border: 1.5px solid #000;
   border-radius: 9999px;
   background: transparent;
   cursor: pointer;
-  transition: all 0.2s ease;
-  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 0.2s ease;
 }
-
-.filter-button:hover {
-  background-color: #f8f8f8;
-}
-
+.filter-button:hover { background-color: #f8f8f8; }
 .filter-button.active {
   background-color: #000;
   color: #fff;
   border-color: #000;
 }
 
+/* --- Dropdown / Select --- */
 .dropdown-group {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 12px;
 }
-
-.price-range {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.price-range input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #000;
-  border-radius: 9999px;
-  transition: all 0.2s ease;
-}
-
-.price-range span {
-  color: #666;
-  font-size: 0.875rem;
-}
-
-.apply-button {
-  width: 100%;
-  padding: 10px 16px;
-  background-color: #000;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s ease;
-  height: 40px;
-}
-
-.apply-button:hover:not(:disabled) {
-  background-color: #333;
-}
-
-.apply-button:disabled {
-  background-color: #666;
-  cursor: not-allowed;
-}
-
-.filter-section {
-  display: flex;
-  flex-direction: column;
-}
-
-.data-type-tabs,
-.filter-type-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 16px;
-}
-
-.tab-button {
-  flex: 1;
-  padding: 8px 16px;
-  border: 1.5px solid #000;
-  border-radius: 20px;
-  background: transparent;
-  color: white;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tab-button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.tab-button.active {
-  background-color: #000;
-  color: white;
-}
-
 .filter-select {
   width: 100%;
-  padding: 10px 12px;
+  height: 40px;
+  padding: 0 12px;
   border: 1.5px solid #000;
   border-radius: 20px;
   background: white;
@@ -158,98 +78,103 @@
   font-size: 14px;
   cursor: pointer;
   transition: border-color 0.2s ease;
-  margin-bottom: 12px;
 }
-
 .filter-select:focus {
   outline: none;
   border-color: #333;
 }
 
-/* Hero UI specific styles */
-.filter-panel .heroui-select,
-.filter-panel .heroui-datepicker {
-  width: 100%;
+/* --- Tabs --- */
+.data-type-tabs,
+.filter-type-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.tab-button {
+  flex: 1;
+  height: 40px;
+  padding: 0 12px;
+  border: 1.5px solid #000;
+  border-radius: 20px;
+  background: transparent;
+  color: #111;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.tab-button:hover { background-color: rgba(0, 0, 0, 0.05); }
+.tab-button.active {
+  background-color: #000;
+  color: white;
 }
 
-.filter-panel .heroui-select-trigger,
-.filter-panel .heroui-datepicker-input {
-  border-radius: 9999px !important;
-  height: 40px !important;
-  border-color: #000 !important;
+/* --- Price Range --- */
+.price-range {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.price-range input {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid #000;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+.price-range span {
+  color: #666;
+  font-size: 0.875rem;
 }
 
-.filter-panel .heroui-select-trigger:hover,
-.filter-panel .heroui-datepicker-input:hover {
-  border-color: #000 !important;
-}
-
-.filter-panel .heroui-select-trigger:focus,
-.filter-panel .heroui-datepicker-input:focus {
-  border-color: #000 !important;
-  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.2) !important;
-}
-
-.filter-panel .heroui-datepicker-inputWrapper {
-  background-color: transparent !important;
-  box-shadow: none !important;
-}
-
-.filter-panel .heroui-datepicker {
-  width: 100%;
-}
-
-.filter-panel .heroui-datepicker-input {
-  border: 1.5px solid #000 !important;
-  border-radius: 9999px !important;
-  height: 40px !important;
-  background-color: transparent !important;
-  transition: all 0.2s ease !important;
-}
-
-.filter-panel .heroui-datepicker-input:hover {
-  border-color: #000 !important;
-}
-
-.filter-panel .heroui-datepicker-input:focus {
-  border-color: #000 !important;
-  box-shadow: none !important;
-}
-
-.filter-panel .heroui-datepicker-inputWrapper {
-  background: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.filter-panel .heroui-datepicker-calendar {
-  border-color: #000 !important;
-}
-
-
-/* ✅ 3) 行動端：按鈕/選單改成單列全寬、touch target >= 44px */
-@media (max-width: 768px) {
-  .filter-buttons { gap: 8px; }
-  .filter-button { flex: 1; height: 44px; }
-
-  .dropdown-group { gap: 12px; }
-  .filter-select { width: 100%; height: 44px; font-size: 16px; } /* 16px 防 iOS 放大 */
-
-  /* ✅ 若背景改亮底，修正文字顏色對比 */
-  .filter-header h2 { color: #111; }
-  .filter-section p { color: #444; }
-  .tab-button { border-color: #000; color: #111; }
-  .tab-button.active { background: #000; color: #fff; }
-}
-
-/* ✅ 4) 固定底部操作列（父層已預留空間，這裡只定義樣式） */
+/* --- Apply Footer --- */
 .filter-footer {
-  position: sticky;               /* 讓按鈕不被捲走 */
+  position: sticky;
   bottom: 0;
-  margin: 12px -16px -12px;       /* 抵消 panel padding，拉滿寬 */
+  margin: 0;
   padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
   background: rgba(255,255,255,.98);
   border-top: 1px solid #eee;
 }
+.apply-button {
+  width: 100%;
+  height: 40px;
+  border-radius: 9999px;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.2s ease;
+}
+.apply-button:hover:not(:disabled) { background-color: #333; }
+.apply-button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
 
-.apply-button { height: 44px; border-radius: 9999px; }
+/* --- 行動端：統一 44px 高度 + 緊湊間距 --- */
+@media (max-width: 768px) {
+  .filter-section { margin: 0 !important; }   /* 全部清空 */
+
+  .filter-panel-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;                            
+  }
+  .filter-section p { margin-bottom: 4px; }
+
+  .filter-button,
+  .tab-button,
+  .filter-select,
+  .apply-button {
+    height: 44px;
+    line-height: 44px;
+    font-size: 16px; /* 防 iOS 放大 */
+  }
+
+  .dropdown-group { gap: 10px; }
+  .data-type-tabs, .filter-type-tabs { margin-bottom: 8px; }
+}
