@@ -33,7 +33,7 @@
 .filter-section p {
   font-size: 0.875rem;
   color: #666;
-  margin-bottom: 6px; /* 控制標題與內容距離 */
+  margin-bottom: 6px; 
 }
 
 /* --- Buttons --- */
@@ -157,7 +157,8 @@
 
 /* --- 行動端：統一 44px 高度 + 緊湊間距 --- */
 @media (max-width: 768px) {
-  .filter-section { margin: 0 !important; }   /* 全部清空 */
+   /* 全部清空 */
+  .filter-section { margin: 0 !important; }  
 
   .filter-panel-body {
     display: flex;
@@ -178,3 +179,63 @@
   .dropdown-group { gap: 10px; }
   .data-type-tabs, .filter-type-tabs { margin-bottom: 8px; }
 }
+
+
+/* 手機：把整個面板變成 bottom-sheet，可收合 */
+@media (max-width: 768px) {
+  .filter-panel {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 30;
+    width: 100%;
+    max-height: 85dvh;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    /* 半透明黑＋毛玻璃在 JSX 已有：bg-black/30 + backdrop-blur-md
+       這裡確保沒被覆蓋（若想純 CSS 控制也可用下面兩行） */
+    /* background: rgba(0,0,0,.3);
+       backdrop-filter: blur(10px); */
+
+    box-shadow: 0 -8px 24px rgba(0,0,0,.25);
+    color: #f3f4f6;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+
+    /* 預設收合：只露出 header (約 48px) 當拉把 */
+    transform: translateY(calc(100% - 48px));
+    transition: transform .28s ease;
+    padding: 8px 12px;        
+  }
+
+   /* 展開panel時的狀態 */
+  .filter-panel.open {           
+    transform: translateY(0);
+  }
+
+  /* 內容可捲動 */
+  .filter-body {
+    overflow: auto;
+    padding: 8px 4px 12px;
+  }
+
+  /* header 的拉把 */
+  .filter-header {
+    position: relative;
+    padding: 6px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .filter-header::before {
+    content: "";
+    position: absolute;
+    top: 4px; left: 50%;
+    transform: translateX(-50%);
+    width: 42px; height: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.6);
+  }
+}
+

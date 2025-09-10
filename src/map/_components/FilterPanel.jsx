@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./FilterPanel.css"
 
 export default function FilterPanel({
@@ -22,6 +22,7 @@ export default function FilterPanel({
 }) {
   const lineSelectRef = useRef(null)
   const districtSelectRef = useRef(null)
+  const [open, setOpen] = useState(false)   // 新增：控制手機收合
 
   // Update dropdown when selectedMRT changes from map
   useEffect(() => {
@@ -40,15 +41,29 @@ export default function FilterPanel({
   }, [selectedDistrict])
 
   return (
-    <div className="filter-panel bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]">
-      <div className="filter-header">
+    // <div className="filter-panel bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]">
+    //   <div className="filter-header">
+    <div className={`filter-panel ${open ? "open" : ""} bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]`}>
+      {/* header 可點擊切換（手機當拉把），桌機無感 */}
+      <div className="filter-header" role="button" aria-expanded={open} onClick={() => setOpen(o => !o)}>
+
         <h2>Filters</h2>
-        <div style={{ marginLeft: "auto" }}>
+        {/* <div style={{ marginLeft: "auto" }}>
           <button>Clear all</button>
-        </div>
+        </div> */}
+        
+        <div style={{ marginLeft: "auto" }}>
+          <button onClick={(e) => e.stopPropagation() 
+            /* 避免點到 header 也收合 */}>
+            Clear all
+          </button>
+       </div>
       </div>
 
-      <div className="filter-section">
+
+{/* 內容包一層，方便在手機展開時滾動 */}
+      <div className="filter-body">
+  <div className="filter-section">
         <div className="data-type-tabs">
           <button
             className={`tab-button ${activeDataType === "courses" ? "active" : ""}`}
@@ -151,6 +166,8 @@ export default function FilterPanel({
           </div>
         )}
       </div>
+</div> {/* /新包起來的filter-body */}
+      
     </div>
   )
 }
