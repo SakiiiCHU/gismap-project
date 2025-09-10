@@ -147,8 +147,12 @@ export default function FilterPanel({
                   </select>
                 )}
 
+                {/* 捷運篩選專用的 Apply 按鈕，只在選擇「捷運」時顯示注意：和行政區的 Apply 是分開寫的 */}
                 <button
-                  onClick={onApplyFilter}
+                  onClick={() => {
+                    onApplyFilter(); // 原本邏輯
+                    setOpen(false); // Apply 後自動收合
+                  }}
                   disabled={
                     isLoading ||
                     !activeDataType ||
@@ -183,6 +187,7 @@ export default function FilterPanel({
                   ))}
                 </select>
 
+                {/* 行政區篩選專用的 Apply 按鈕 */}
                 <button
                   onClick={() => {
                     onApplyFilter(); // 原本送出邏輯：送出篩選
