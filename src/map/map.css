@@ -1,10 +1,13 @@
 /* 頁面最外層，滿版設定 */
 .map-page-wrapper {
   width: 100vw;
-  position: relative;
+  position: relative;             
+  /* 讓底下的 absolute 子層（panel/map）有定位依據 */
   overflow: hidden;
-  margin-top: 50px;
-  height: calc(100vh - 50px);
+  --topbar-h: 50px;
+  margin-top: var(--topbar-h);
+  height: calc(100dvh - var(--topbar-h)); 
+  /* 避免 iOS 100vh 跳動 */
 }
 
 /* 地圖區域滿版鋪底 */
@@ -16,11 +19,16 @@
 
 /* Map 容器 */
 .map-container {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
+}
+
+/* 如果需要，確保 Leaflet 也吃滿高（有用到再加） */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
 }
 
 /* Loading 樣式 */
@@ -57,7 +65,7 @@
 .filter-panel {
   background: rgba(130, 128, 128, 0.5);
   border: 1px solid #e5e7eb;
-  backdrop-filter: blur(10px); /* 模糊背景 */
+  backdrop-filter: blur(10px); 
   border-radius: 16px;
   padding: 20px;
   /* box-shadow: 0 4px 5px rgba(0, 0, 0, 0.2); */
@@ -94,22 +102,46 @@
 }
 
 /* 手機版 RWD */
+/* ✅ 手機版 RWD */
 @media (max-width: 768px) {
+  /* 面板改為 bottom-sheet 全寬覆蓋 */
   .filter-panel {
-    padding: 16px;
-    top: 16px;
-    /* left: 50%; */
-    /* transform: translateX(-50%); */
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    z-index: 30;
+    width: auto;                  /* 覆蓋桌面 300px */
+    max-height: 85dvh;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    padding: 10px 12px 10px;     
+    background: rgba(255,255,255,0.96);
+    color: #111;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 -8px 24px rgba(0,0,0,.12);
+    overflow: auto;
+    display: flex; 
+    flex-direction: column;
   }
 
-  .filter-results {
-    width: 90vw;
-    max-width: 360px;
-    bottom: 16px;
-    left: 50%;
-    transform: translateX(-50%);
+  /* 粗暴隱藏行動端結果面板（但請保留你在 map.jsx 的入口 FAB/按鈕） */
+  /* 兩個 class 一起處理，避免命名不一致 */
+  .filter-results,
+  .filter-results-container {
+    display: none !important;
+  }
+
+  /* 若 Leaflet 控制被底欄擋住，可加這個（可選） */
+  .leaflet-control-container {
+    margin-bottom: calc(70px + env(safe-area-inset-bottom));
   }
 }
+
+
+/* iOS Home Indicator 安全區（給底欄留白用） */
+/* @supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .filter-panel { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
+} */
+
 
 /* Global styles for the map application */
 * {
