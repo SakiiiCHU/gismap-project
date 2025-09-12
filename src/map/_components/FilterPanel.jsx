@@ -69,46 +69,56 @@ export default function FilterPanel({
       {/* 內容包一層，方便在手機展開時滾動 */}
       <div className="filter-body">
         <div className="filter-section">
-          <div className="data-type-tabs">
-            <button
-              className={`tab-button ${
-                activeDataType === "courses" ? "active" : ""
-              }`}
-              onClick={() => onDataTypeChange("courses")}
-            >
-              Course
-            </button>
-            <button
-              className={`tab-button ${
-                activeDataType === "exhibition" ? "active" : ""
-              }`}
-              onClick={() => onDataTypeChange("exhibition")}
-            >
-              Exhibit
-            </button>
-          </div>
+        <div className="pill-tabs">
+        {/* 以下開始是區分展覽與課程的tab */}
+  <div
+    className="pill-cursor"
+    style={{ transform: activeDataType === 'courses'
+      ? 'translateX(0%)'
+      : 'translateX(100%)'
+    }}
+  />
+  <button
+    className={`pill-tab ${activeDataType === 'courses' ? 'active' : ''}`}
+    onClick={() => onDataTypeChange('courses')}
+  >
+    Course
+  </button>
+  <button
+    className={`pill-tab ${activeDataType === 'exhibition' ? 'active' : ''}`}
+    onClick={() => onDataTypeChange('exhibition')}
+  >
+    Exhibit
+  </button>
+</div>
+
         </div>
 
         <div className="filter-section">
           <span className="py-1">Search By...</span>
-          <div className="filter-type-tabs">
-            <button
-              className={`tab-button ${
-                activeFilterType === "mrt" ? "active" : ""
-              }`}
-              onClick={() => onFilterTypeChange("mrt")}
-            >
-              by MRT
-            </button>
-            <button
-              className={`tab-button ${
-                activeFilterType === "district" ? "active" : ""
-              }`}
-              onClick={() => onFilterTypeChange("district")}
-            >
-              by District
-            </button>
-          </div>
+                  {/* 以下開始是區分MRT與District的tab */}
+                  <div className="filter-type-tabs pill-tabs">
+  <div
+    className="pill-cursor"
+    style={{
+      transform:
+        activeFilterType === "mrt" ? "translateX(0%)" : "translateX(100%)",
+    }}
+  />
+  <button
+    className={`pill-tab ${activeFilterType === "mrt" ? "active" : ""}`}
+    onClick={() => onFilterTypeChange("mrt")}
+  >
+    by MRT
+  </button>
+  <button
+    className={`pill-tab ${activeFilterType === "district" ? "active" : ""}`}
+    onClick={() => onFilterTypeChange("district")}
+  >
+    by District
+  </button>
+</div>
+
 
           {activeFilterType === "mrt" && (
             <div className="filter-section mt-4">
