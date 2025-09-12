@@ -1,4 +1,3 @@
-// src/home/Home.jsx
 import { useRef, useEffect } from "react";
 import { createNoise3D } from "simplex-noise";
 
@@ -9,49 +8,88 @@ export default function Home() {
     const noise3D = createNoise3D();
     const canvas = canvasRef.current;
     const ctx = canvas.getContext("2d");
-    const w = canvas.width;
-    const h = canvas.height;
 
-    const totalLayers = 35;      // 層數
-    const baseSpacing = 10;      // 平均間距
-    const stepAngle = 0.04;      // 每圈角度取樣
+    function resize() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      canvas.style.width = "100vw";
+      canvas.style.height = "100vh";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+    resize();
+    window.addEventListener("resize", resize);
 
-    function draw(t) {
+    const TOTAL = 34;
+    const BASE_SPACING = 12;
+    const ANGLE_STEP = 0.03;
+
+    const SHAPE_AMP = 36;
+    const SHAPE_FREQ = 1.4;
+    const SHAPE_FLOW = 0.0003;
+
+    const DENSITY_STRENGTH = 0.5;
+    const DENSITY_FLOW = 0.00025;
+    const DENSITY_GAMMA = 2.2;
+
+    const PULSE_AMP = 0.08;
+    const PULSE_SPEED = 0.0011;
+    const RING_PHASE_LAG = 0.06;
+
+    const OUTER_GAIN_EXP = 1.6;
+
+    function draw(ts) {
+      const t = ts;
+      const w = canvas.width / (ctx.getTransform().a || 1);
+      const h = canvas.height / (ctx.getTransform().a || 1);
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, w, h);
+      ctx.translate(w / 2, h / 2);
       ctx.strokeStyle = "white";
       ctx.lineWidth = 1;
-      ctx.translate(w / 2, h / 2);
 
-      for (let i = 0; i < totalLayers; i++) {
+      const globalPulse = 1 + Math.sin(t * PULSE_SPEED) * PULSE_AMP;
+
+      const N = Math.floor((Math.PI * 2) / ANGLE_STEP);
+      const angles = new Array(N + 1);
+      for (let i = 0; i <= N; i++) angles[i] = i * ANGLE_STEP;
+
+      const mu = (noise3D(0.37, 0.91, t * DENSITY_FLOW) + 1) * Math.PI;
+      const densityField = new Array(N + 1);
+      for (let i = 0; i <= N; i++) {
+        const a = angles[i];
+        let d01 = (Math.cos(a - mu) * 0.5 + 0.5);
+        d01 = Math.pow(d01, DENSITY_GAMMA);
+        densityField[i] = 1 + (d01 - 0.5) * 2 * DENSITY_STRENGTH;
+      }
+
+      const shapeField = new Array(N + 1);
+      for (let i = 0; i <= N; i++) {
+        const a = angles[i];
+        const s = noise3D(Math.cos(a * SHAPE_FREQ), Math.sin(a * SHAPE_FREQ), 100 + t * SHAPE_FLOW);
+        shapeField[i] = s * 0.5 + 1;
+      }
+
+      for (let ring = 0; ring < TOTAL; ring++) {
         ctx.beginPath();
+        const rPow = Math.pow(ring / (TOTAL - 1), OUTER_GAIN_EXP);
+        const baseRadius = ring * BASE_SPACING * globalPulse;
 
-        for (let a = 0; a <= Math.PI * 2 + stepAngle; a += stepAngle) {
-          // --- 🔑 角度密度控制 ---
-          // 在某些角度（如 200°~300°）密度更高
-          const angleDeg = (a * 180) / Math.PI;
-          const hotspot =
-            angleDeg > 200 && angleDeg < 300
-              ? 0.6 // 壓縮，密度更高
-              : 1.2; // 放鬆，密度更低
+        const localPulse = 1 + Math.sin(t * PULSE_SPEED - ring * RING_PHASE_LAG) * PULSE_AMP;
 
-          // 動態因子（時間流動 + 角度控制）
-          const densityFactor =
-            1 + Math.sin(t * 0.001 + a * 2) * 0.15 * hotspot;
+        for (let i = 0; i <= N; i++) {
+          const a = angles[i];
 
-          // 基本半徑（加入密度變化）
-          const baseRadius = i * baseSpacing * densityFactor;
+          const r =
+            baseRadius *
+            localPulse *
+            densityField[i] *
+            (1 + (shapeField[i] - 1) * rPow);
 
-          // 外圈形狀 noise
-          const nx = Math.cos(a);
-          const ny = Math.sin(a);
-          const noise =
-            noise3D(nx, ny, t * 0.0003) * (i / totalLayers) * 20;
-
-          const r = baseRadius + noise;
           const x = r * Math.cos(a);
           const y = r * Math.sin(a);
-
-          if (a === 0) ctx.moveTo(x, y);
+          if (i === 0) ctx.moveTo(x, y);
           else ctx.lineTo(x, y);
         }
 
@@ -59,7 +97,6 @@ export default function Home() {
         ctx.stroke();
       }
 
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
       requestAnimationFrame(draw);
     }
 
@@ -67,21 +104,14 @@ export default function Home() {
   }, []);
 
   return (
-    <div
+    <canvas
+      ref={canvasRef}
       style={{
-        background: "black",
+        display: "block",
+        width: "100vw",
         height: "100vh",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center"
+        background: "black",
       }}
-    >
-      <canvas
-        ref={canvasRef}
-        width={800}
-        height={800}
-        style={{ display: "block" }}
-      />
-    </div>
+    />
   );
 }
