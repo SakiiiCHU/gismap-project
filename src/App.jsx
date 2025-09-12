@@ -2,7 +2,7 @@
 import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar";
-import Home from "./home/Home";
+import HomeBase from "./home/HomeBase.jsx";   
 import MapPage from "./map/page.jsx";
 
 function App() {
@@ -10,8 +10,8 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/explore" element={<MapPage />} />
+      <Route path="/" element={<HomeBase />} />
+      <Route path="/explore" element={<MapPage />} />
       </Routes>
     </Router>
   );
