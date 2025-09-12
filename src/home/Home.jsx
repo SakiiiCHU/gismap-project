@@ -25,7 +25,7 @@ export default function Home() {
     const ANGLE_STEP = 0.03;
 
     const SHAPE_AMP = 36;
-    const SHAPE_FREQ = 1.4;
+    const SHAPE_FREQ = 0.6;
     const SHAPE_FLOW = 0.0003;
 
     const DENSITY_STRENGTH = 0.5;
@@ -56,31 +56,39 @@ export default function Home() {
       for (let i = 0; i <= N; i++) angles[i] = i * ANGLE_STEP;
 
       const mu = (noise3D(0.37, 0.91, t * DENSITY_FLOW) + 1) * Math.PI;
+
       const densityField = new Array(N + 1);
-      for (let i = 0; i <= N; i++) {
+      for (let i = 0; i < N; i++) {
         const a = angles[i];
-        let d01 = (Math.cos(a - mu) * 0.5 + 0.5);
+        let d01 = Math.cos(a - mu) * 0.5 + 0.5;
         d01 = Math.pow(d01, DENSITY_GAMMA);
         densityField[i] = 1 + (d01 - 0.5) * 2 * DENSITY_STRENGTH;
       }
+      densityField[N] = densityField[0];
 
       const shapeField = new Array(N + 1);
-      for (let i = 0; i <= N; i++) {
+      for (let i = 0; i < N; i++) {
         const a = angles[i];
-        const s = noise3D(Math.cos(a * SHAPE_FREQ), Math.sin(a * SHAPE_FREQ), 100 + t * SHAPE_FLOW);
+        const s = noise3D(
+          Math.cos(a * SHAPE_FREQ),
+          Math.sin(a * SHAPE_FREQ),
+          100 + t * SHAPE_FLOW
+        );
         shapeField[i] = s * 0.5 + 1;
       }
+      shapeField[N] = shapeField[0];
 
       for (let ring = 0; ring < TOTAL; ring++) {
         ctx.beginPath();
         const rPow = Math.pow(ring / (TOTAL - 1), OUTER_GAIN_EXP);
         const baseRadius = ring * BASE_SPACING * globalPulse;
+        const localPulse =
+          1 + Math.sin(t * PULSE_SPEED - ring * RING_PHASE_LAG) * PULSE_AMP;
 
-        const localPulse = 1 + Math.sin(t * PULSE_SPEED - ring * RING_PHASE_LAG) * PULSE_AMP;
+        let firstX = 0, firstY = 0; // 🟢 記錄起點
 
         for (let i = 0; i <= N; i++) {
           const a = angles[i];
-
           const r =
             baseRadius *
             localPulse *
@@ -89,11 +97,15 @@ export default function Home() {
 
           const x = r * Math.cos(a);
           const y = r * Math.sin(a);
-          if (i === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
+          if (i === 0) {
+            ctx.moveTo(x, y);
+            firstX = x; firstY = y; // 🟢 存下第一點
+          } else {
+            ctx.lineTo(x, y);
+          }
         }
 
-        ctx.closePath();
+        ctx.lineTo(firstX, firstY); // 🟢 強制補畫回起點
         ctx.stroke();
       }
 
