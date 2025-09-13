@@ -1,55 +1,47 @@
 import { useRef, useEffect } from "react";
 import { createNoise3D } from "simplex-noise";
 
-/**
- * Ring deformation via periodic Fourier series with ORDER GUARANTEE
- * - Periodic r(θ): r(0)=r(2π) and r'(0)=r'(2π) → no seam.
- * - Single shared deformation field f(θ) across rings (scaled per ring).
- * - Monotonic enforcement per angle: r_{k+1}(θ_i) ≥ r_k(θ_i)+gap.
- * - Reduced speed (1/3) + strong angular smoothing to remove jaggies.
- * - NEW: Radial sweep that modulates "segment density" and opacity
- *   from outer → inner → outer (ping‑pong), without changing geometry.
- */
-export default function Home() {
+export default function HomeV2({
+  FLOW = 0.00035 / 3,
+  COEF_DECAY = 0.55,
+  TOTAL = 34,
+  BASE_SPACING = 12,
+}) {
   const canvasRef = useRef(null);
   const rafRef = useRef(null);
   const dprRef = useRef(1);
 
+  const flowRef = useRef(FLOW);
+  const decayRef = useRef(COEF_DECAY);
+  const totalRef = useRef(TOTAL);
+  const spacingRef = useRef(BASE_SPACING);
+
+  flowRef.current = FLOW;
+  decayRef.current = COEF_DECAY;
+  totalRef.current = TOTAL;
+  spacingRef.current = BASE_SPACING;
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // ===== Parameters =====
-    const TOTAL = 34;                 // number of rings
-    const BASE_SPACING = 12;          // px between rings
-    const ANGLE_STEP = 0.015;         // angular sampling (rad)
-
-    // Temporal pulses (slowed to 1/3)
+    const ANGLE_STEP = 0.015;
     const PULSE_AMP = 0.08;
-    const PULSE_SPEED = 0.0011 / 3;   // per ms
+    const PULSE_SPEED = 0.0011 / 3;
     const RING_PHASE_LAG = 0.06;
-
-    // Outer ring deformation gain
     const OUTER_GAIN_EXP = 1.6;
 
-    // Fourier field
-    const M = 6;                      // harmonics
-    const COEF_DECAY = 0.55;          // decay across harmonics
-    const FLOW = 0.00035 / 3;         // per ms (slower)
+    const M = 6;
 
-    // Minimum radial gap to keep ring order
-    const MIN_GAP = BASE_SPACING * 0.6;
+    const MIN_GAP = spacingRef.current * 0.6;
 
-    // === Radial sweep (density spotlight) ===
-    const SWEEP_SPEED = 0.05;         // cycles per second (visual sweep speed)
-    const FOCUS_SIGMA = 2.4;          // how many rings wide the focus blob spreads
-    const DENSITY_GAIN = 1.2;         // extra resample density at focus (×base)
-    const BASE_ALPHA = 0.25;          // minimum opacity away from focus
+    const SWEEP_SPEED = 0.05;
+    const FOCUS_SIGMA = 2.4;
+    const DENSITY_GAIN = 1.2;
+    const BASE_ALPHA = 0.25;
 
-    // DPR-aware resize
     function resize() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
       dprRef.current = dpr;
@@ -58,7 +50,6 @@ export default function Home() {
       canvas.style.width = "100vw";
       canvas.style.height = "100vh";
     }
-
     resize();
     window.addEventListener("resize", resize);
 
@@ -69,12 +60,10 @@ export default function Home() {
     const pts = new Array(N);
     const noise3D = createNoise3D();
 
-    // ===== Closed centripetal Catmull–Rom to Bézier =====
     const alpha = 0.5;
     function drawClosedSpline(ctx, points) {
       const n = points.length;
       if (n < 2) return;
-
       const t = new Float32Array(n + 3);
       const P = (i) => points[(i + n) % n];
       t[0] = 0;
@@ -84,7 +73,6 @@ export default function Home() {
         const dy = b[1] - a[1];
         t[i + 1] = t[i] + Math.pow(Math.hypot(dx, dy), alpha);
       }
-
       ctx.moveTo(points[0][0], points[0][1]);
       for (let i = 0; i < n; i++) {
         const p0 = P(i - 1), p1 = P(i), p2 = P(i + 1), p3 = P(i + 2);
@@ -104,7 +92,6 @@ export default function Home() {
       }
     }
 
-    // --- Equal-arc-length resampling for uniform segment spacing ---
     function resampleClosed(points, targetCount) {
       const n = points.length;
       const P = (i) => points[(i + n) % n];
@@ -158,34 +145,32 @@ export default function Home() {
     function draw(tsMs) {
       const tSec = tsMs * 0.001;
       const dpr = dprRef.current;
+      const currentFLOW = flowRef.current;
+      const currentDECAY = decayRef.current;
+      const currentTOTAL = Math.floor(totalRef.current);
+      const currentSPACING = spacingRef.current;
 
       ctx.save();
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       const w = canvas.width / dpr, h = canvas.height / dpr;
       ctx.clearRect(0, 0, w, h);
       ctx.translate(w / 2, h / 2);
-
       ctx.strokeStyle = "white";
       ctx.lineJoin = "round";
       ctx.lineCap = "round";
-      ctx.shadowColor = "transparent";
-      ctx.globalCompositeOperation = "source-over";
 
-      // Base pulse for all rings
       const globalPulse = 1 + Math.sin(tSec * (PULSE_SPEED * 1000)) * PULSE_AMP;
 
-      // === Fourier coefficients ===
       const a = new Float32Array(M + 1);
       const b = new Float32Array(M + 1);
       for (let m = 1; m <= M; m++) {
-        const decay = Math.pow(COEF_DECAY, m - 1);
-        const na = noise3D(m * 1.17, 0.37, tSec * (FLOW * 1000));
-        const nb = noise3D(m * -0.91, 0.53, 100 + tSec * (FLOW * 1000));
+        const decay = Math.pow(currentDECAY, m - 1);
+        const na = noise3D(m * 1.17, 0.37, tSec * (currentFLOW * 1000));
+        const nb = noise3D(m * -0.91, 0.53, 100 + tSec * (currentFLOW * 1000));
         a[m] = decay * na;
         b[m] = decay * nb;
       }
 
-      // === Angular deformation field (smoothed) ===
       const fRaw = new Float32Array(N);
       for (let i = 0; i < N; i++) {
         const th = angles[i];
@@ -196,53 +181,46 @@ export default function Home() {
       }
       const f = gaussianSmooth(fRaw, 7);
 
-      // === Compute radii at each angle with monotonic enforcement ===
-      const rLine = new Float32Array(TOTAL);
+      const rLine = new Float32Array(currentTOTAL);
       for (let i = 0; i < N; i++) {
         const th = angles[i];
-
-        for (let ring = 0; ring < TOTAL; ring++) {
-          const rPow = Math.pow(ring / (TOTAL - 1), OUTER_GAIN_EXP);
-          const baseR = ring * BASE_SPACING * globalPulse;
+        for (let ring = 0; ring < currentTOTAL; ring++) {
+          const rPow = Math.pow(ring / (currentTOTAL - 1), OUTER_GAIN_EXP);
+          const baseR = ring * currentSPACING * globalPulse;
           const localPulse = 1 + Math.sin(tSec * (PULSE_SPEED * 1000) - ring * RING_PHASE_LAG) * PULSE_AMP;
           const gain = 0.18 + 0.55 * rPow;
           const rRaw = baseR * localPulse * (1 + gain * f[i]);
           rLine[ring] = rRaw;
         }
 
-        // enforce outward monotonic with minimum gap
         let last = rLine[0];
-        for (let ring = 1; ring < TOTAL; ring++) {
+        for (let ring = 1; ring < currentTOTAL; ring++) {
           const minAllowed = last + MIN_GAP;
           if (rLine[ring] < minAllowed) rLine[ring] = minAllowed;
           last = rLine[ring];
         }
 
-        for (let ring = 0; ring < TOTAL; ring++) {
+        for (let ring = 0; ring < currentTOTAL; ring++) {
           const r = rLine[ring];
           if (!pts[ring]) pts[ring] = new Array(N);
           pts[ring][i] = [r * Math.cos(th), r * Math.sin(th)];
         }
       }
 
-      // === Radial sweep focus (outer → inner → outer) ===
-      const cycle = tSec * SWEEP_SPEED * 2; // ping-pong period = 1/SWEEP_SPEED
-      const phase = cycle % 2;             // 0..2
+      const cycle = tSec * SWEEP_SPEED * 2;
+      const phase = cycle % 2;
       const focus = phase < 1
-        ? (TOTAL - 1) * phase               // down to inner
-        : (TOTAL - 1) * (2 - phase);        // back to outer
+        ? (currentTOTAL - 1) * phase
+        : (currentTOTAL - 1) * (2 - phase);
 
-      for (let ring = 0; ring < TOTAL; ring++) {
-        const rPow = Math.pow(ring / (TOTAL - 1), OUTER_GAIN_EXP);
+      for (let ring = 0; ring < currentTOTAL; ring++) {
+        const rPow = Math.pow(ring / (currentTOTAL - 1), OUTER_GAIN_EXP);
         const dist = (ring - focus) / FOCUS_SIGMA;
-        const wgt = Math.exp(-0.5 * dist * dist); // 0..1 Gaussian around focus
+        const wgt = Math.exp(-0.5 * dist * dist);
 
-        // Opacity & width modulation
         ctx.globalAlpha = BASE_ALPHA + (1 - BASE_ALPHA) * wgt;
         ctx.lineWidth = 0.7 + rPow * 0.55 + 0.4 * wgt;
-        ctx.miterLimit = 1.2;
 
-        // Segment density modulation via equal-arc-length resampling
         const baseCount = Math.max(180, Math.floor(pts[ring].length * 1.2));
         const targetCount = Math.floor(baseCount * (1 + DENSITY_GAIN * wgt));
         const smoothPts = resampleClosed(pts[ring], targetCount);

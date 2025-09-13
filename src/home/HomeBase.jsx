@@ -165,7 +165,12 @@ export default function HomeBase() {
           BASE_SPACING={baseSpacing}
         />
       ) : (
-        <HomeV2 />
+        <HomeV2 
+  FLOW={speed}
+  COEF_DECAY={decay}
+  TOTAL={total}
+  BASE_SPACING={baseSpacing}
+/>
       )}
 
       <style>
