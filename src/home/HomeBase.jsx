@@ -4,9 +4,11 @@ import HomeV2 from "./HomeV2";
 
 export default function HomeBase() {
   const [mode, setMode] = useState("classic");
-  const [complexity, setComplexity] = useState(5);
   const [speed, setSpeed] = useState(0.0001);
-  const [amplitude, setAmplitude] = useState(0.00008);
+  const [decay, setDecay] = useState(0.45);
+  const [total, setTotal] = useState(34);
+  const [baseSpacing, setBaseSpacing] = useState(12);
+  // const [amplitude, setAmplitude] = useState(0.00008);
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh" }}>
@@ -14,7 +16,7 @@ export default function HomeBase() {
         style={{
           position: "absolute",
           top: "60px",
-          right: "20px",
+          right: "15px",
           zIndex: 10,
           background: "rgba(30,30,30,0.8)",
           color: "white",
@@ -23,7 +25,7 @@ export default function HomeBase() {
           backdropFilter: "blur(6px)",
           boxShadow: "0 2px 8px rgba(0,0,0,0.3)",
           fontFamily: "sans-serif",
-          width: "230px", // ⬅️ 控制總寬
+          width: "200px",  
           fontSize: "12px",
         }}
       >
@@ -36,7 +38,7 @@ export default function HomeBase() {
             borderRadius: "999px",
             overflow: "hidden",
             marginBottom: "14px",
-            width: "100%", // ⬅️ 基準寬度
+            width: "100%",
           }}
         >
           <div
@@ -77,33 +79,41 @@ export default function HomeBase() {
             display: "flex",
             flexDirection: "column",
             gap: "2px",
-            width: "100%", // 與 pill 寬一致
+            width: "100%",
           }}
         >
           {[
             {
-              label: "Complexity",
-              value: complexity,
-              min: 1,
-              max: 10,
-              step: 1,
-              onChange: setComplexity,
-            },
-            {
               label: "Speed",
               value: speed,
-              min: 0.00005,
-              max: 0.001,
-              step: 0.00005,
+              min: 0.00002,
+              max: 0.0002,
+              step: 0.000005,
               onChange: setSpeed,
             },
             {
-              label: "Amplitude",
-              value: amplitude,
-              min: 0,
-              max: 0.0002,
-              step: 0.00001,
-              onChange: setAmplitude,
+              label: "Decay",
+              value: decay,
+              min: 0.3,
+              max: 0.9,
+              step: 0.01,
+              onChange: setDecay,
+            },
+            {
+              label: "Total",
+              value: total,
+              min: 10,
+              max: 60,
+              step: 1,
+              onChange: setTotal,
+            },
+            {
+              label: "Spacing",
+              value: baseSpacing,
+              min: 6,
+              max: 20,
+              step: 1,
+              onChange: setBaseSpacing,
             },
           ].map((item) => (
             <div
@@ -115,7 +125,6 @@ export default function HomeBase() {
                 width: "100%",
               }}
             >
-              {/* 左文字固定寬 */}
               <div
                 style={{
                   width: "70px",
@@ -127,7 +136,6 @@ export default function HomeBase() {
                 {item.label}
               </div>
 
-              {/* 右bar固定寬 */}
               <input
                 type="range"
                 min={item.min}
@@ -136,10 +144,10 @@ export default function HomeBase() {
                 value={item.value}
                 onChange={(e) => item.onChange(+e.target.value)}
                 style={{
-                  width: "120px", // ⬅️ 固定寬度
+                  width: "80px",
                   appearance: "none",
                   height: "2px",
-                  background: "rgba(255,255,255,0.2)", // 可選，白20%
+                  background: "rgba(255,255,255,0.2)",
                   borderRadius: "2px",
                   outline: "none",
                 }}
@@ -150,12 +158,16 @@ export default function HomeBase() {
       </div>
 
       {mode === "classic" ? (
-        <HomeClassic M={complexity} FLOW={speed} PULSE_AMP={amplitude} />
+        <HomeClassic 
+          FLOW={speed} 
+          COEF_DECAY={decay}
+          TOTAL={total}
+          BASE_SPACING={baseSpacing}
+        />
       ) : (
         <HomeV2 />
       )}
 
-      {/* --- 自訂 slider thumb --- */}
       <style>
         {`
           input[type=range]::-webkit-slider-thumb {
