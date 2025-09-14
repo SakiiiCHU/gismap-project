@@ -22,7 +22,9 @@ export default function FilterPanel({
 }) {
   const lineSelectRef = useRef(null);
   const districtSelectRef = useRef(null);
-  const [open, setOpen] = useState(false); // 新增：控制手機收合
+  const [open, setOpen] = useState(() => window.innerWidth > 768); //// 控制手機/桌面開合狀態：桌面預設展開避免 Safari 空白
+
+
 
   // Update dropdown when selectedMRT changes from map
   useEffect(() => {

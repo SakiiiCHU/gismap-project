@@ -1,67 +1,88 @@
+/* --- FilterPanel 容器 --- */
+.filter-panel {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  width: 260px;
+  background: rgba(0,0,0,0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 20px;
+  color: #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
+  font-size: 14px;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+  z-index: 10;
+}
+
+/* --- Header --- */
 .filter-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .filter-header h2 {
   font-size: 1rem;
-  font-weight: 300;
-  color: #333;
+  font-weight: 400;
+  color: #f8f8f8;
 }
-
 .clear-all {
   font-size: 0.875rem;
-  color: #666;
-  border: 1px solid #e0e0e0;
-  padding: 0.25rem 0.75rem;
-  border-radius: 20px;
+  color: #aaa;
   background: transparent;
+  border: none;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: opacity 0.2s ease;
 }
-.clear-all:hover { background-color: #f0f0f0; }
+.clear-all:hover { opacity: 0.6; }
 
-/* --- Section 基本間距 --- */
+/* --- 區塊 --- */
 .filter-section {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
-}
-.filter-section:last-child { margin-bottom: 0; }
-
-.filter-section p {
-  font-size: 0.875rem;
-  color: #666;
-  margin-bottom: 6px; 
+  gap: 8px;
 }
 
-/* --- Buttons --- */
-.filter-buttons {
-  display: flex;
-  gap: 0.5rem;
-}
-.filter-button {
-  flex: 1;
-  height: 40px;
-  padding: 0 14px;
-  border: 1.5px solid #000;
+/* --- pill Tabs --- */
+.pill-tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border: 0.75px solid rgba(255,255,255,.3); /* ⬅︎ 細邊框 */
   border-radius: 9999px;
+  overflow: hidden;
+  background: rgba(255,255,255,0.04);
+  width: 100%;
+  -webkit-transform: translateZ(0);  /* ⬅︎ 修正 Safari 粗線 */
+}
+.pill-cursor {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: calc(50% - 1px);
+  height: calc(100% - 2px);
+  background: rgba(255,255,255,0.6); /* ⬅︎ 微亮但非純白 */
+  border-radius: 9999px;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+.pill-tab {
   background: transparent;
+  border: none;
+  color: #bbb;              /* ⬅︎ 淺灰文字 */
+  font-weight: 500;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.2s ease;
+  padding: 0;
+  z-index: 1;
+  transition: color 0.2s ease;
 }
-.filter-button:hover { background-color: #f8f8f8; }
-.filter-button.active {
-  background-color: #000;
-  color: #fff;
-  border-color: #000;
-}
+.pill-tab.active { color: black; }
 
-/* --- Dropdown / Select --- */
+/* --- Dropdown (Select) --- */
 .dropdown-group {
   display: flex;
   flex-direction: column;
@@ -69,219 +90,71 @@
 }
 .filter-select {
   width: 100%;
-  padding: 10px 12px;
-  border: 1.5px solid #000;
-  border-radius: 20px;
-  background: rgba(0,0,0,0); /* ✅ 半透明黑底 */
-  color: #f3f3f3;               /* ✅ 白字 */
-  font-size: 14px;
+  border: 0.75px solid rgba(255,255,255,.3);
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.05);
+  color: #f1f1f1;
+  font-size: 13px;
+  padding: 0 14px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 34px;
+  line-height: 34px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  -webkit-transform: translateZ(0);
 }
-
-.filter-select option {
-  color: #000; /* 下拉展開後選單仍要黑字 */
-}
+.filter-select option { color: #000; }
 
 .filter-select:focus {
   outline: none;
-  border-color: #333;
+  box-shadow: none;
+  border-color: inherit;
 }
 
-/* --- Tabs --- */
-.data-type-tabs,
-.filter-type-tabs {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.tab-button {
-  flex: 1;
-  height: 40px;
-  padding: 0 12px;
-  border: 1.5px solid #000;
-  border-radius: 20px;
-  background: transparent;
-  color: #111;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-.tab-button:hover { background-color: rgba(0, 0, 0, 0.05); }
-.tab-button.active {
-  background-color: #000;
-  color: white;
-}
 
-/* --- Price Range --- */
-.price-range {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-.price-range input {
-  flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #000;
-  border-radius: 9999px;
-  transition: all 0.2s ease;
-}
-.price-range span {
-  color: #666;
-  font-size: 0.875rem;
-}
-
-/* --- Apply Footer --- */
-.filter-footer {
-  position: sticky;
-  bottom: 0;
-  margin: 0;
-  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
-  background: rgba(255,255,255,.98);
-  border-top: 1px solid #eee;
-}
+/* --- Apply Button --- */
 .apply-button {
   width: 100%;
-  height: 40px;
   border-radius: 9999px;
-  background-color: #000;
-  color: #fff;
-  border: none;
+  background: rgba(255,255,255,0.12);
+  color: #f8f8f8;
+  border: 0.75px solid rgba(255,255,255,.2);
+  height: 34px;
+  line-height: 34px;
+  font-size: 13px;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
 }
-.apply-button:hover:not(:disabled) { background-color: #333; }
+.apply-button:hover:not(:disabled) { background-color: rgba(255,255,255,0.2); }
 .apply-button:disabled {
-  background-color: #666;
+  background-color: rgba(255,255,255,0.05);
+  color: #777;
   cursor: not-allowed;
 }
 
-/* Pill-Tab css start */
-.pill-tabs {
-  position: relative;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  border: 1.5px solid #000;
-  border-radius: 9999px;
-  overflow: hidden;
-  width: 100%;
-  padding: 4px;              
-  background: transparent;
+/* --- 統一高度 --- */
+.pill-tab,
+.filter-select,
+.apply-button {
+  height: 34px;
+  line-height: 34px;
+  font-size: 13px;
 }
 
-.pill-cursor {
-  position: absolute;
-  top: 4px;                 
-  left: 4px;
-  width: calc(50% - 4px);   
-  height: calc(100% - 8px);   
-  background: #000;
-  border-radius: 9999px;
-  transition: transform 0.3s ease;
-  z-index: 0;
-}
-
-.pill-tab {
-  background: transparent;
-  border: none;
-  color: #666;
-  font-weight: 500;
-  cursor: pointer;
-  padding: 8px 0;
-  z-index: 1;
-  transition: color 0.2s ease;
-}
-
-
-.pill-tab.active {
-  color: #fff;
-}
-
-
-/* --- 行動端：統一 44px 高度 + 緊湊間距 --- */
-@media (max-width: 768px) {
-   /* 全部清空 */
-  .filter-section { margin: 0 !important; }  
-
-  .filter-panel-body {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;                            
-  }
-  .filter-section p { margin-bottom: 4px; }
-
-  .filter-button,
-  .tab-button,
-  .filter-select,
-  .apply-button {
-    height: 44px;
-    line-height: 44px;
-    font-size: 16px; /* 防 iOS 放大 */
-  }
-
-  .dropdown-group { gap: 10px; }
-  .data-type-tabs, .filter-type-tabs { margin-bottom: 8px; }
-}
-
-
-/* 手機：把整個面板變成 bottom-sheet，可收合 */
+/* --- 手機 RWD --- */
 @media (max-width: 768px) {
   .filter-panel {
-    position: absolute;
-    left: 0; right: 0; bottom: 0;
-    z-index: 30;
+    top: auto; left: 0; right: 0; bottom: 0;
     width: 100%;
     max-height: 85dvh;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    /* 半透明黑＋毛玻璃在 JSX 已有：bg-black/30 + backdrop-blur-md
-       這裡確保沒被覆蓋（若想純 CSS 控制也可用下面兩行） */
-    /* background: rgba(0,0,0,.3);
-       backdrop-filter: blur(10px); */
-
-    box-shadow: 0 -8px 24px rgba(0,0,0,.25);
-    color: #f3f4f6;
-
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-
-    /* 預設收合：只露出 header (約 48px) 當拉把 */
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 24px rgba(0,0,0,.5);
+    padding: 12px 16px;
     transform: translateY(calc(100% - 48px));
     transition: transform .28s ease;
-    padding: 8px 12px;        
   }
-
-   /* 展開panel時的狀態 */
-  .filter-panel.open {           
-    transform: translateY(0);
-  }
-
-  /* 內容可捲動 */
-  .filter-body {
-    overflow: auto;
-    padding: 8px 4px 12px;
-  }
-
-  /* header 的拉把 */
-  .filter-header {
-    position: relative;
-    padding: 6px 0 8px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  .filter-header::before {
-    content: "";
-    position: absolute;
-    top: 4px; left: 50%;
-    transform: translateX(-50%);
-    width: 42px; height: 4px;
-    border-radius: 999px;
-    background: rgba(255,255,255,.6);
-  }
+  .filter-panel.open { transform: translateY(0); }
 }
-
