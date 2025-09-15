@@ -3,17 +3,17 @@
   position: absolute;
   top: 24px;
   left: 24px;
-  width: 260px;
+  width: 234px; 
   background: rgba(0,0,0,0.7);
   backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 14px;       
+  padding: 18px;            
   color: #e5e7eb;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.35);
-  font-size: 14px;
+  gap: 14px;                  
+  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  font-size: 12px;             
   letter-spacing: 0.03em;
   line-height: 1.6;
   z-index: 10;
@@ -26,12 +26,12 @@
   align-items: center;
 }
 .filter-header h2 {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 400;
   color: #f8f8f8;
 }
 .clear-all {
-  font-size: 0.875rem;
+  font-size: 0.75rem;
   color: #aaa;
   background: transparent;
   border: none;
@@ -44,7 +44,7 @@
 .filter-section {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 /* --- pill Tabs --- */
@@ -52,12 +52,12 @@
   position: relative;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  border: 0.75px solid rgba(255,255,255,.3); /* ⬅︎ 細邊框 */
+  border: 0.75px solid rgba(255,255,255,.3);
   border-radius: 9999px;
   overflow: hidden;
   background: rgba(255,255,255,0.04);
   width: 100%;
-  -webkit-transform: translateZ(0);  /* ⬅︎ 修正 Safari 粗線 */
+  -webkit-transform: translateZ(0);
 }
 .pill-cursor {
   position: absolute;
@@ -65,7 +65,7 @@
   left: 1px;
   width: calc(50% - 1px);
   height: calc(100% - 2px);
-  background: rgba(255,255,255,0.6); /* ⬅︎ 微亮但非純白 */
+  background: rgba(255,255,255,0.6);
   border-radius: 9999px;
   transition: transform 0.3s ease;
   z-index: 0;
@@ -73,12 +73,15 @@
 .pill-tab {
   background: transparent;
   border: none;
-  color: #bbb;              /* ⬅︎ 淺灰文字 */
+  color: #bbb;
   font-weight: 500;
   cursor: pointer;
   padding: 0;
   z-index: 1;
   transition: color 0.2s ease;
+  font-size: 12px;        
+  height: 30px;           
+  line-height: 30px;
 }
 .pill-tab.active { color: black; }
 
@@ -86,7 +89,7 @@
 .dropdown-group {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px; 
 }
 .filter-select {
   width: 100%;
@@ -94,23 +97,21 @@
   border-radius: 9999px;
   background: rgba(255,255,255,0.05);
   color: #f1f1f1;
-  font-size: 13px;
-  padding: 0 14px;
+  font-size: 12px;    
+  padding: 0 12px;          
   -webkit-appearance: none;
   appearance: none;
-  height: 34px;
-  line-height: 34px;
+  height: 30px;            
+  line-height: 30px;
   cursor: pointer;
   -webkit-transform: translateZ(0);
 }
 .filter-select option { color: #000; }
-
 .filter-select:focus {
   outline: none;
   box-shadow: none;
   border-color: inherit;
 }
-
 
 /* --- Apply Button --- */
 .apply-button {
@@ -119,9 +120,9 @@
   background: rgba(255,255,255,0.12);
   color: #f8f8f8;
   border: 0.75px solid rgba(255,255,255,.2);
-  height: 34px;
-  line-height: 34px;
-  font-size: 13px;
+  height: 30px;            
+  line-height: 30px;
+  font-size: 12px;          
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -135,16 +136,7 @@
   cursor: not-allowed;
 }
 
-/* --- 統一高度 --- */
-.pill-tab,
-.filter-select,
-.apply-button {
-  height: 34px;
-  line-height: 34px;
-  font-size: 13px;
-}
-
-/* --- 手機 RWD --- */
+/* --- 手機 RWD (維持原尺寸) --- */
 @media (max-width: 768px) {
   .filter-panel {
     top: auto; left: 0; right: 0; bottom: 0;
