@@ -24,8 +24,6 @@ export default function FilterPanel({
   const districtSelectRef = useRef(null);
   const [open, setOpen] = useState(() => window.innerWidth > 768); //// 控制手機/桌面開合狀態：桌面預設展開避免 Safari 空白
 
-
-
   // Update dropdown when selectedMRT changes from map
   useEffect(() => {
     console.log("🔄 Updating dropdown value to:", selectedMRT);
@@ -44,84 +42,101 @@ export default function FilterPanel({
 
   return (
     <div
-      className={`filter-panel ${
-        open ? "open" : ""
-      } bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]`}
-    >
-      {/* header 可點擊切換（手機當拉把），桌機無感 */}
-      <div
-        className="filter-header"
-        role="button"
-        aria-expanded={open}
-        onClick={() => setOpen((o) => !o)}
+  className={`filter-panel ${
+    open ? "open" : ""
+  } bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]`}
+  onClick={(e) => {
+    // 點到 panel 本體或 header（但不是 clear-all）都可以開合
+    const clickedClearAll = e.target.closest(".clear-all");
+    const clickedHeader = e.target.closest(".filter-header");
+    if (!clickedClearAll && (e.target === e.currentTarget || clickedHeader)) {
+      setOpen((o) => !o);
+    }
+  }}
+>
+      {/* header（非觸發區，只負責顯示） */}
+      <div className="filter-header">
+    <h2>Filters</h2>
+    <div style={{ marginLeft: "auto" }}>
+      <button
+        className="clear-all"
+        onClick={(e) => {
+          e.stopPropagation(); // 避免觸發 panel 開合
+          onClearAll?.();
+        }}
       >
-        <h2>Filters</h2>
-
-        <div style={{ marginLeft: "auto" }}>
-          <button
-            onClick={
-              (e) => e.stopPropagation()
-              /* 避免點到 header 也收合 */
-            }
-          >
             Clear all
           </button>
         </div>
       </div>
+  
       {/* 內容包一層，方便在手機展開時滾動 */}
       <div className="filter-body">
+        {/* --- 課程 / 展覽 Tabs --- */}
         <div className="filter-section">
-        <div className="pill-tabs">
-        {/* 以下開始是區分展覽與課程的tab */}
-  <div
-    className="pill-cursor"
-    style={{ transform: activeDataType === 'courses'
-      ? 'translateX(0%)'
-      : 'translateX(100%)'
-    }}
-  />
-  <button
-    className={`pill-tab ${activeDataType === 'courses' ? 'active' : ''}`}
-    onClick={() => onDataTypeChange('courses')}
-  >
-    Course
-  </button>
-  <button
-    className={`pill-tab ${activeDataType === 'exhibition' ? 'active' : ''}`}
-    onClick={() => onDataTypeChange('exhibition')}
-  >
-    Exhibit
-  </button>
-</div>
-
+          <div className="pill-tabs">
+            <div
+              className="pill-cursor"
+              style={{
+                transform:
+                  activeDataType === "courses"
+                    ? "translateX(0%)"
+                    : "translateX(100%)",
+              }}
+            />
+            <button
+              className={`pill-tab ${
+                activeDataType === "courses" ? "active" : ""
+              }`}
+              onClick={() => onDataTypeChange("courses")}
+            >
+              Course
+            </button>
+            <button
+              className={`pill-tab ${
+                activeDataType === "exhibition" ? "active" : ""
+              }`}
+              onClick={() => onDataTypeChange("exhibition")}
+            >
+              Exhibit
+            </button>
+          </div>
         </div>
-
+  
+        {/* --- 搜尋方式 Tabs --- */}
+        <div className="filter-header">
+          <h2>Search By...</h2>
+        </div>
         <div className="filter-section">
-          <span className="py-1">Search By...</span>
-                  {/* 以下開始是區分MRT與District的tab */}
-                  <div className="filter-type-tabs pill-tabs">
-  <div
-    className="pill-cursor"
-    style={{
-      transform:
-        activeFilterType === "mrt" ? "translateX(0%)" : "translateX(100%)",
-    }}
-  />
-  <button
-    className={`pill-tab ${activeFilterType === "mrt" ? "active" : ""}`}
-    onClick={() => onFilterTypeChange("mrt")}
-  >
-    by MRT
-  </button>
-  <button
-    className={`pill-tab ${activeFilterType === "district" ? "active" : ""}`}
-    onClick={() => onFilterTypeChange("district")}
-  >
-    by District
-  </button>
-</div>
-
-
+          <div className="filter-type-tabs pill-tabs">
+            <div
+              className="pill-cursor"
+              style={{
+                transform:
+                  activeFilterType === "mrt"
+                    ? "translateX(0%)"
+                    : "translateX(100%)",
+              }}
+            />
+            <button
+              className={`pill-tab ${
+                activeFilterType === "mrt" ? "active" : ""
+              }`}
+              onClick={() => onFilterTypeChange("mrt")}
+            >
+              MRT
+            </button>
+            <button
+              className={`pill-tab ${
+                activeFilterType === "district" ? "active" : ""
+              }`}
+              onClick={() => onFilterTypeChange("district")}
+            >
+              District
+            </button>
+          </div>
+  
+          {/* --- MRT 選擇 --- */}
           {activeFilterType === "mrt" && (
             <div className="filter-section mt-4">
               <div className="dropdown-group">
@@ -139,7 +154,7 @@ export default function FilterPanel({
                     </option>
                   ))}
                 </select>
-
+  
                 {selectedMRT && (
                   <select
                     value={selectedStation || ""}
@@ -158,12 +173,11 @@ export default function FilterPanel({
                     ))}
                   </select>
                 )}
-
-                {/* 捷運篩選專用的 Apply 按鈕，只在選擇「捷運」時顯示注意：和行政區的 Apply 是分開寫的 */}
+  
                 <button
                   onClick={() => {
-                    onApplyFilter(); // 原本邏輯
-                    setOpen(false); // Apply 後自動收合
+                    onApplyFilter();
+                    setOpen(false);
                   }}
                   disabled={
                     isLoading ||
@@ -177,7 +191,8 @@ export default function FilterPanel({
               </div>
             </div>
           )}
-
+  
+          {/* --- District 選擇 --- */}
           {activeFilterType === "district" && (
             <div className="filter-section mt-4">
               <div className="dropdown-group">
@@ -198,12 +213,11 @@ export default function FilterPanel({
                     </option>
                   ))}
                 </select>
-
-                {/* 行政區篩選專用的 Apply 按鈕 */}
+  
                 <button
                   onClick={() => {
-                    onApplyFilter(); // 原本送出邏輯：送出篩選
-                    setOpen(false); // 新增：Apply 後自動收合
+                    onApplyFilter();
+                    setOpen(false);
                   }}
                   disabled={
                     isLoading ||
@@ -219,8 +233,8 @@ export default function FilterPanel({
             </div>
           )}
         </div>
-      </div>{" "}
-      {/* /新包起來的filter-body */}
+      </div>
     </div>
   );
+  
 }
