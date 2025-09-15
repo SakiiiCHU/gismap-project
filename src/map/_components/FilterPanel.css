@@ -98,11 +98,11 @@
   background: rgba(255,255,255,0.05);
   color: #f1f1f1;
   font-size: 12px;    
-  padding: 0 12px;          
+  padding: 0px 60px;
   -webkit-appearance: none;
   appearance: none;
   height: 30px;            
-  line-height: 30px;
+  line-height: 26px;
   cursor: pointer;
   -webkit-transform: translateZ(0);
 }
@@ -148,5 +148,34 @@
     transform: translateY(calc(100% - 48px));
     transition: transform .28s ease;
   }
+
   .filter-panel.open { transform: translateY(0); }
+
+  .filter-header::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 42px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.6); 
+  }
+  
+  .pill-tab {
+    height: 36px;
+    line-height: 36px;
+    font-size: 15px; 
+  }
+
+  .filter-select {
+    height: 36px;  
+    font-size: 15px;           
+  }
+
+  .apply-button {
+    height: 36px;  
+    font-size: 15px;           
+  }
 }
