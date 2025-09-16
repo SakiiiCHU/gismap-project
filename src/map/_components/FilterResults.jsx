@@ -15,7 +15,7 @@ export default function FilterResults({
   selectedType, // 新增傳遞 type
   selectedLocationId, // ✅ 傳遞選擇的 `selectedLocationId`
 }) {
-  console.log("✅ FilterResults received selectedType:", selectedType) // 測試看看
+  //console.log("✅ FilterResults received selectedType:", selectedType) 
 
   // 排序捷運最近距離
   const shortestPathsSorted = shortestPaths?.features
@@ -94,8 +94,11 @@ export default function FilterResults({
   }
 
   return (
-    <div className="filter-results-container">
-      <div className="filter-results-header">
+<div
+  className={`filter-results-container ${
+    (filteredLocations?.length > 0 || shortestPaths?.features?.length > 0) ? "expanded" : ""
+  }`}
+>      <div className="filter-results-header">
         <h4 className="text-sm font-medium text-gray-700 tracking-wide">Results</h4>
         <span className="text-sm text-gray-500 tracking-wider">
           {activeFilterType === "district" && filteredLocations.length > 0
@@ -114,7 +117,7 @@ export default function FilterResults({
                 <div className="location-content">
                   <div className="location-info">
                     <h3>{location.name}</h3>
-                    <div className="location-address">{location.locat_name}</div>
+                    <div className="location-name">{location.locat_name}</div>
                     <div className="location-address">{location.address}</div>
                   </div>
                 </div>
@@ -130,7 +133,7 @@ export default function FilterResults({
 
             {shortestPathsSorted.length > 0 ? (
               <div>
-                <div className="section-title">Nearest Locations:</div>
+                <div className="section-title">Nearby Places (Walking Distance):</div>
                 {shortestPathsSorted.map((path, index) => {
                   const locationDetails = locations.find(
                     (loc) => loc.locat_id.toString() === path.properties.end_name.toString(),
@@ -162,7 +165,7 @@ export default function FilterResults({
                                     className="exhibition-item border-l-2 border-blue-500 pl-2"
                                   >
                                     <div className="exhibition-name font-medium">{exhibition.e_name}</div>
-                                    <div className="exhibition-dates text-xs text-gray-600">
+                                    <div className="exhibition-dates">
                                       {formatDate(exhibition.e_startdate)} - {formatDate(exhibition.e_enddate)}
                                     </div>
                                   </div>
