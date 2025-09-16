@@ -44,7 +44,7 @@ export default function FilterPanel({
     <div
       className={`filter-panel ${
         open ? "open" : ""
-      } bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]`}
+      }  backdrop-blur-md rounded-2xl p-6  text-white`}
       onClick={(e) => {
         // 點到 panel 本體或 header（但不是 clear-all）都可以開合
         const clickedClearAll = e.target.closest(".clear-all");

@@ -4,14 +4,12 @@
   top: 24px;
   left: 24px;
   width: 234px; 
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(10px);
+  background: rgba(40, 40, 40, 0.8) !important;
   border-radius: 14px;       
   padding: 22px 18px 22px 18px;            
   color: #e5e7eb;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
   font-size: 13px;             
   letter-spacing: 0.03em;
   line-height: 1.6;
