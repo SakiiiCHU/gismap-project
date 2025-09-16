@@ -1,6 +1,6 @@
 
 /* FilterResults 浮動框（可依需求調整位置） */
-.filter-results {
+/* .filter-results {
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(6px);
   border-radius: 12px;
@@ -10,7 +10,7 @@
   width: 280px;
   overflow-y: auto;
   font-size: 14px;
-}
+} */
 
 .filter-results-container {
   background: rgba(130, 128, 128, 0.5);
@@ -19,8 +19,7 @@
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   padding: 16px;
-  width: 300px; /* 跟 FilterPanel 同寬 */
-  max-height: calc(100vh - 80px - 378px - 40px);
+  max-height: 300px;
   overflow-y: auto;
   font-size: 14px;
 }

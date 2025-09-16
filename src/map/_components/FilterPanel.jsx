@@ -42,34 +42,37 @@ export default function FilterPanel({
 
   return (
     <div
-  className={`filter-panel ${
-    open ? "open" : ""
-  } bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]`}
-  onClick={(e) => {
-    // 點到 panel 本體或 header（但不是 clear-all）都可以開合
-    const clickedClearAll = e.target.closest(".clear-all");
-    const clickedHeader = e.target.closest(".filter-header");
-    if (!clickedClearAll && (e.target === e.currentTarget || clickedHeader)) {
-      setOpen((o) => !o);
-    }
-  }}
->
+      className={`filter-panel ${
+        open ? "open" : ""
+      } bg-black/30 backdrop-blur-md rounded-2xl p-6 shadow-lg text-white w-[300px]`}
+      onClick={(e) => {
+        // 點到 panel 本體或 header（但不是 clear-all）都可以開合
+        const clickedClearAll = e.target.closest(".clear-all");
+        const clickedHeader = e.target.closest(".filter-header");
+        if (
+          !clickedClearAll &&
+          (e.target === e.currentTarget || clickedHeader)
+        ) {
+          setOpen((o) => !o);
+        }
+      }}
+    >
       {/* header（非觸發區，只負責顯示） */}
       <div className="filter-header">
-    <h2>Filters</h2>
-    <div style={{ marginLeft: "auto" }}>
-      <button
-        className="clear-all"
-        onClick={(e) => {
-          e.stopPropagation(); // 避免觸發 panel 開合
-          onClearAll?.();
-        }}
-      >
+        <h2>Filters</h2>
+        <div style={{ marginLeft: "auto" }}>
+          <button
+            className="clear-all"
+            onClick={(e) => {
+              e.stopPropagation(); // 避免觸發 panel 開合
+              onClearAll?.();
+            }}
+          >
             Clear all
           </button>
         </div>
       </div>
-  
+
       {/* 內容包一層，方便在手機展開時滾動 */}
       <div className="filter-body">
         {/* --- 課程 / 展覽 Tabs --- */}
@@ -102,7 +105,7 @@ export default function FilterPanel({
             </button>
           </div>
         </div>
-  
+
         {/* --- 搜尋方式 Tabs --- */}
         <div className="filter-header">
           <h2>Search By...</h2>
@@ -135,7 +138,7 @@ export default function FilterPanel({
               District
             </button>
           </div>
-  
+
           {/* --- MRT 選擇 --- */}
           {activeFilterType === "mrt" && (
             <div className="filter-section mt-4">
@@ -154,7 +157,7 @@ export default function FilterPanel({
                     </option>
                   ))}
                 </select>
-  
+
                 {selectedMRT && (
                   <select
                     value={selectedStation || ""}
@@ -173,7 +176,7 @@ export default function FilterPanel({
                     ))}
                   </select>
                 )}
-  
+
                 <button
                   onClick={() => {
                     onApplyFilter();
@@ -191,7 +194,7 @@ export default function FilterPanel({
               </div>
             </div>
           )}
-  
+
           {/* --- District 選擇 --- */}
           {activeFilterType === "district" && (
             <div className="filter-section mt-4">
@@ -213,7 +216,7 @@ export default function FilterPanel({
                     </option>
                   ))}
                 </select>
-  
+
                 <button
                   onClick={() => {
                     onApplyFilter();
@@ -236,5 +239,4 @@ export default function FilterPanel({
       </div>
     </div>
   );
-  
 }

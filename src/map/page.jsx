@@ -467,11 +467,10 @@ export default function Page() {
       {/* Map 滿版 */}
       <div className="map-content absolute inset-0 z-0">{memoizedMapView}</div>
 
-      {/* FilterPanel 浮動框 */}
-      <div className="absolute top-4 left-4 z-10">{memoizedFilterPanel}</div>
+      {/* FilterPanel 跟 FilterResults 一起包進panel-stack */}
+      <div className="panel-stack" style={{ ["--panel-w"]: "234px" }}>
+        {memoizedFilterPanel}
 
-      {/* FilterResults 固定左下角 */}
-      <div className="absolute bottom-4 left-4 z-10">
         <FilterResults
           filteredLocations={filteredLocations}
           selectedDistrict={selectedDistrict}
@@ -480,7 +479,7 @@ export default function Page() {
           activeFilterType={activeFilterType}
           shortestPaths={filteredPaths}
           onSelectLocation={setSelectedLocationId}
-          selectedType={activeDataType} // ⭐️ 新增傳入選擇展覽或課程的狀態傳遞
+          selectedType={activeDataType}
         />
       </div>
     </div>

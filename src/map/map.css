@@ -64,15 +64,56 @@
 
 
 /* FilterResults 容器結構 */
-.filter-results-container {
+/* .filter-results-container {
   display: flex;
   flex-direction: column;
   height: 100%;
-}
+} */
 
 .results-scroll-area {
   flex: 1;
   overflow-y: auto;
+}
+
+.panel-stack {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: var(--panel-w, 234px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;              
+  z-index: 40;
+  pointer-events: none;
+}
+.panel-stack > * {
+  pointer-events: auto;   /* 子元素可點擊 */
+}
+
+/* 讓 FilterPanel 不再用絕對定位 */
+.panel-stack .filter-panel {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  width: 100% !important;
+}
+
+/* 讓 FilterResults 貼在 Panel 下方 */
+.panel-stack .filter-results-container {
+  position: relative;
+  width: 100%;
+  z-index: 35;
+}
+
+/* 手機：只顯示 bottom-sheet 的 FilterPanel */
+@media (max-width: 768px) {
+  .panel-stack {
+    top: auto; left: 0; right: 0; bottom: 0;
+    width: 100%;
+  }
+  .panel-stack .filter-results-container {
+    display: none !important;
+  }
 }
 
 /* 手機版 RWD */
