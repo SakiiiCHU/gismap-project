@@ -1,38 +1,25 @@
-
-/* FilterResults 浮動框（可依需求調整位置） */
-/* .filter-results {
-  background-color: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(6px);
-  border-radius: 12px;
-  padding: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-  max-height: 40vh;
-  width: 280px;
-  overflow-y: auto;
-  font-size: 14px;
-} */
-
 .filter-results-container {
   background: rgba(130, 128, 128, 0.5);
   backdrop-filter: blur(6px);
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  padding: 0; /* 讓 header 與內容分離 */
+  padding: 0; 
   display: flex;
   flex-direction: column;
-  overflow: hidden; /* 避免 sticky header 位移錯亂 */
+  overflow: hidden; 
   font-size: 14px;
   /* 動態高度動畫 */
-  max-height: 80px;          /* 初始小高度 */
+  max-height: 80px;         
   transition:
-  max-height 0.5s linear,     /* 線性等速展開 */
-  opacity 0.3s ease-in;       /* 淡入 */
+  max-height 0.5s linear,    
+  opacity 0.3s ease-in;      
 }
 
 
 /* 當有結果時加入這個 class */
-.filter-results-container.expanded {
-  max-height: 400px;         
+.panel-stack .filter-results-container.expanded {
+  max-height: calc(100dvh - 50px - 16px - 276px - 30px);
+  overflow-y: auto;
 }
 
 .filter-results-header {

@@ -4,7 +4,8 @@
 
 html, body {
   margin: 0;
-  font-family: 'Ysabeau Office', 'Roboto Mono', 'Martian Mono', 'Cascadia Mono', monospace;
+  /* font-family: 'Martian Mono', 'Roboto Mono', 'Martian Mono', 'Cascadia Mono', monospace; */
+  font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

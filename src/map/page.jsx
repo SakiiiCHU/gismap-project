@@ -468,7 +468,7 @@ export default function Page() {
       <div className="map-content absolute inset-0 z-0">{memoizedMapView}</div>
 
       {/* FilterPanel 跟 FilterResults 一起包進panel-stack */}
-      <div className="panel-stack" style={{ ["--panel-w"]: "234px" }}>
+      <div className="panel-stack" style={{ ["--panel-w"]: "245px" }}>
         {memoizedFilterPanel}
 
         <FilterResults

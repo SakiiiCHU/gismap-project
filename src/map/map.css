@@ -64,12 +64,14 @@
 
 
 
-
+/* =========================
+新增的filter panel + results 組合樣式
+========================= */
 .panel-stack {
   position: absolute;
   top: 1rem;
   left: 1rem;
-  width: var(--panel-w, 234px);
+  width: var(--panel-w, 245px);
   display: flex;
   flex-direction: column;
   /* gap: 12px;               */
