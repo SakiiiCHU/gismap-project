@@ -84,7 +84,7 @@ const MapView = ({
   useEffect(() => {
     const loadStaticData = async () => {
       try {
-        const base = import.meta.env.BASE_URL; // ⚠️ 自動判斷是 dev 或 build
+        const base = import.meta.env.BASE_URL; //  自動判斷是 dev 或 build
 
         const [realLocationsRes, exhibitionsRes, coursesRes] =
           await Promise.all([
@@ -467,6 +467,7 @@ const MapView = ({
   });
 
   // Base styles
+  // 路線基本樣式routeStyle其實用不到可刪
   const routeStyle = {
     color: "#666666",
     weight: 3,
@@ -569,6 +570,8 @@ const MapView = ({
   const styleRoutes = (feature) => {
     const isHighlighted = shouldHighlightRoute(feature);
     const isHovered = hoveredRoute === feature.properties.MRTCODE;
+    const baseColor = getLineColor(feature.properties.MRTCODE);
+
 
     if (isHovered) {
       return {
@@ -584,7 +587,12 @@ const MapView = ({
       };
     }
 
-    return routeStyle;
+    // return routeStyle;
+    //  讓MRT初始就是彩色但是比較淺（Ｅ6是十六進位的透明度90%）
+      return {
+        ...routeStyle,
+        color: baseColor + "E6" , 
+      };
   };
 
   const onEachRoute = (feature, layer) => {
