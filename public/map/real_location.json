@@ -1,8 +1,4 @@
 [
-{"type":"header","version":"5.2.1","comment":"Export to JSON plugin for PHPMyAdmin"},
-{"type":"database","name":"eventurearts"},
-{"type":"table","name":"real_location","database":"eventurearts","data":
-[
 {"locat_id":"1","locat_name":"一角鯨咖啡 Monodon Coffee","city":"台北市","district":"大同區","address":"赤峰街49巷10號","latitude":"25.0556488","longitude":"121.5199418"},
 {"locat_id":"2","locat_name":"nonbiri","city":"台北市","district":"松山區","address":"敦化北路120巷7弄11號1樓","latitude":"25.0537255","longitude":"121.5481043"},
 {"locat_id":"3","locat_name":"Yukan‘na Space 勇敢的空間","city":"台北市","district":"大安區","address":"通安街46號2樓","latitude":"25.0314523","longitude":"121.5532192"},
@@ -418,6 +414,4 @@
 {"locat_id":"480","locat_name":"MODUS ARTS 美學藝術計畫","city":"台北市","district":"信義區","address":"松山路220號","latitude":"25.0448623","longitude":"121.5776321"},
 {"locat_id":"481","locat_name":"時光選物店","city":"台北市","district":"信義區","address":"虎林街40巷1號","latitude":"25.0474406","longitude":"121.5766730"},
 {"locat_id":"482","locat_name":"NOVA ARTS 星野藝術計畫","city":"台北市","district":"大安區","address":"通化街38巷4號","latitude":"25.0308472","longitude":"121.5540293"}
-]
-}
 ]

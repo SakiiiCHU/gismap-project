@@ -10,6 +10,7 @@ import {
   LayerGroup,
   Marker,
   Popup,
+  Pane,
 } from "react-leaflet";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
@@ -19,6 +20,7 @@ import { useFitBounds } from "./useFitBounds"; // Import the new hook
 import MarkerClusterGroup from "@changey/react-leaflet-markercluster";
 
 // Fix Leaflet's default icon issue
+//  自訂 icon（展覽 / 課程）+ 修正 Leaflet 預設圖示路徑問題
 L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.7.1/dist/images/";
 
 // Custom icons for different types
@@ -47,6 +49,9 @@ const formatDate = (dateString) => {
   });
 };
 
+// ------------------------------
+//MapView 元件主體：初始 state 與 ref
+// ------------------------------
 const MapView = ({
   mrtRoutes,
   taipeiDistricts,
@@ -81,6 +86,11 @@ const MapView = ({
   const prevSelectedStation = useRef(selectedStation);
   const prevSelectedDistrict = useRef(selectedDistrict);
 
+
+// ------------------------------
+// 一次性載入靜態資料/ 存進 staticData   
+// 載入成功 / 失敗會 log 出來（debug用）
+// ------------------------------
   useEffect(() => {
     const loadStaticData = async () => {
       try {
@@ -115,6 +125,21 @@ const MapView = ({
 
     loadStaticData();
   }, []);
+
+// ------------------------------
+// 偵測篩選條件變動 → 清空地圖上舊有的 marker / popup
+// 清空邏輯需放在最上層
+//[上層 useEffect]
+//└── 清空 locations + 清空 marker/popup DOM
+//    ｜
+//    ▼
+//[中層 useEffect]
+//└── 根據 shortestPaths → 建立新 locations
+//    ｜
+//    ▼
+//[下層渲染區]
+//└── renderMarkers(renderStations...) → 根據 locations 繪圖
+// ------------------------------
 
   // Clear locations when filter criteria changes
   useEffect(() => {
@@ -151,6 +176,14 @@ const MapView = ({
     prevSelectedStation.current = selectedStation;
     prevSelectedDistrict.current = selectedDistrict;
   }, [selectedMRT, activeFilterType, selectedStation, selectedDistrict]);
+
+
+  // ------------------------------
+//   根據 shortestPaths 產生 locations（selected by mRT）
+// - 行政區模式會略過此段
+// - 用 end_name (locat_id) 從 staticData.realLocations 篩出場地
+// - 再依 selectedType 附上對應的展覽或課程資料
+// ------------------------------
 
   useEffect(() => {
     // Don't fetch if we're in district filter mode
@@ -226,7 +259,7 @@ const MapView = ({
           setLocations(processedLocations);
         }
       } catch (err) {
-        console.error("[v0] Error processing static locations:", err);
+        console.error(" Error processing static locations:", err);
       }
     };
 
@@ -239,17 +272,25 @@ const MapView = ({
     console.log("Current filteredLocations prop:", filteredLocations);
   }, [locations, filteredLocations]);
 
+
   // 修改 selectedLocationId 的 useEffect 處理邏輯
+// ------------------------------
+//    根據 selectedLocationId 聚焦地圖
+// - 若為行政區模式 → 從 filteredLocations 找資料
+// - 若為捷運模式 → 從 locations 找資料（來自 shortestPaths）
+// - 飛到該位置並打開 popup，找不到 marker 時動態建立臨時 marker
+// ------------------------------
+
   useEffect(() => {
     if (!selectedLocationId) return;
 
     console.log(
-      `🔍 Selected location ID: ${selectedLocationId}, Type: ${selectedType}, Filter: ${activeFilterType}`
+      `Selected location ID: ${selectedLocationId}, Type: ${selectedType}, Filter: ${activeFilterType}`
     );
 
-    // 根據不同的篩選類型查找位置
     let location;
 
+      // 根據 activeFilterType 決定從哪裡找資料
     if (activeFilterType === "district") {
       // 對於行政區篩選，只需要比對 locat_id，不需要檢查 type
       location = filteredLocations?.find(
@@ -257,6 +298,7 @@ const MapView = ({
       );
       console.log("Looking in filteredLocations for district:", location);
     } else {
+
       // 對於捷運篩選，檢查 locat_id 和 type
       location = locations.find(
         (loc) => loc.locat_id.toString() === selectedLocationId.toString()
@@ -264,7 +306,7 @@ const MapView = ({
       console.log("Looking in locations for MRT:", location);
     }
 
-    console.log("✅ Found location in MapView:", location);
+    console.log(" Found location in MapView:", location);
 
     if (location && mapRef.current) {
       const { latitude, longitude } = location;
@@ -452,6 +494,11 @@ const MapView = ({
     activeFilterType,
   ]); // 監聽 activeFilterType
 
+  // ------------------------------
+//  根據目前資料自動縮放地圖視角
+// - 自訂 useFitBounds hook
+// - 不處理資料，只負責移動畫面位置
+// ------------------------------
   // Use the custom fitBounds hook
   useFitBounds({
     mapRef,
@@ -466,6 +513,13 @@ const MapView = ({
     activeFilterType,
   });
 
+
+  // ------------------------------
+//  樣式與互動控制層
+// - 定義 MRT 路線 / 站點 / 行政區 多種狀態樣式
+// - styleRoutes 依 hover / select 狀態回傳當前樣式
+// - onEachRoute 綁定 hover / click 事件（透過透明 hit 線擴大點擊範圍）
+// ------------------------------
   // Base styles
   // 路線基本樣式routeStyle其實用不到可刪
   const routeStyle = {
@@ -547,7 +601,7 @@ const MapView = ({
     fillOpacity: 0.9,
   };
 
-  // District selected style (hover)
+  // District selected style (hover)行政區多邊形樣式
   const districtStyle = (feature) => {
     const isSelected = feature.properties.TNAME === selectedDistrict;
     const isHovered = feature.properties.TNAME === hoveredDistrict;
@@ -638,6 +692,13 @@ const MapView = ({
   };
   
 
+//將目前 selectedLineStations（點選某條捷運線後從父層傳入的站點陣列）轉換成 GeoJSON 格式
+//這是之後 renderStations() 傳給 <GeoJSON data={stationGeoJSON}> 用的資料來源
+// 依賴條件：
+//前提是使用者已點選某條捷運線 → 才會有 selectedLineStations
+// 和前面流程關係：
+//屬於 選取 MRT 線後才會顯示的衍生資料
+//並不是全域 marker（那些是 locations / filteredLocations）
   // Create GeoJSON for stations
   const stationGeoJSON = {
     type: "FeatureCollection",
@@ -696,67 +757,81 @@ const MapView = ({
   };
 
   // Create separate LayerGroups for routes and stations
+  //mrtRoutes GeoJSON 畫出台北所有捷運線
+  //每條線套用 styleRoutes()（根據 hover/selected 狀態決定顏色與粗細）
   const renderRoutes = () => (
-    <LayerGroup>
-      {mrtRoutes && (
-        <GeoJSON
-          key={`routes-${selectedMRT || "all"}-${hoveredRoute}`}
-          data={mrtRoutes}
-          style={styleRoutes}
-          onEachFeature={onEachRoute}
-        />
-      )}
-    </LayerGroup>
+    <Pane name="routes" style={{ zIndex: 400 }}>
+      <LayerGroup>
+        {mrtRoutes && (
+          <GeoJSON
+            key={`routes-${selectedMRT || "all"}-${hoveredRoute}`}
+            data={mrtRoutes}
+            style={styleRoutes}
+            onEachFeature={onEachRoute}
+          />
+        )}
+      </LayerGroup>
+    </Pane>
   );
 
-  const renderStations = () => (
-    <LayerGroup>
-      {selectedLineStations && selectedLineStations.length > 0 && (
-        <GeoJSON
-          key={`stations-${selectedMRT}-${JSON.stringify(
-            selectedLineStations
-          )}`}
-          data={stationGeoJSON}
-          pointToLayer={(feature, latlng) => {
-            const style = getStationStyle(feature.properties.id);
-            const marker = L.circleMarker(latlng, {
-              ...style,
-              zIndexOffset: 1000,
-            });
 
-            marker.on({
-              mouseover: () => {
-                if (!shouldHighlightStation(feature.properties.id)) {
-                  marker.setStyle({
-                    ...hoverStationStyle,
-                    zIndexOffset: 1000,
-                  });
-                }
-              },
-              mouseout: () => {
-                if (!shouldHighlightStation(feature.properties.id)) {
-                  marker.setStyle({
-                    ...style,
-                    zIndexOffset: 1000,
-                  });
-                }
-              },
-              click: () => {
-                console.log("Clicked station:", feature.properties.id);
-                onStationClick(feature.properties.id);
-              },
-            });
+// 畫出選中 MRT Line 的所有 Station（放在比 routes 更高的 pane）
+const renderStations = () => (
+  <Pane name="stations" style={{ zIndex: 500 }}>
+    {selectedLineStations && selectedLineStations.length > 0 && (
+      <GeoJSON
+        pane="stations"   // 讓 GeoJSON 產生的所有子圖層預設都進 stations pane
+        key={`stations-${selectedMRT}-${JSON.stringify(selectedLineStations)}`}
+        data={stationGeoJSON}
+        pointToLayer={(feature, latlng) => {
+          // 確保是 CircleMarker（Path 類型），才有 setStyle
+          const baseStyle = {
+            ...getStationStyle(feature.properties.id),
+            radius: (getStationStyle(feature.properties.id).radius ?? 8),
+            pane: "stations",
+            // 避免點到站時事件冒泡到線（或地圖）造成誤觸
+            bubblingMouseEvents: false,
+          };
 
-            marker.bindPopup(
-              `${feature.properties.name}<br>${feature.properties.name_english}`
-            );
+          const marker = L.circleMarker(latlng, baseStyle);
 
-            return marker;
-          }}
-        />
-      )}
-    </LayerGroup>
-  );
+          // 防守：只在仍在地圖上時才 setStyle，避免 unmount 時報錯
+          const safeSet = (s) => {
+            if (marker && marker.setStyle && marker._map) marker.setStyle(s);
+          };
+
+          marker.on({
+            mouseover: () => {
+              if (!shouldHighlightStation(feature.properties.id)) {
+                safeSet({
+                  ...hoverStationStyle,
+                  radius: hoverStationStyle.radius ?? baseStyle.radius + 2,
+                  pane: "stations",
+                });
+              }
+            },
+            mouseout: () => {
+              if (!shouldHighlightStation(feature.properties.id)) {
+                safeSet(baseStyle);
+              }
+            },
+            click: () => {
+              // 👉 這裡保持原本流程：選到站 → 交給 onStationClick
+              // 你現有的 useFitBounds 會在外面依 selectedStation 反應視角
+              onStationClick(feature.properties.id);
+            },
+          });
+
+          marker.bindPopup(
+            `${feature.properties.name}<br>${feature.properties.name_english}`
+          );
+
+          return marker;
+        }}
+      />
+    )}
+  </Pane>
+);
 
   // Render exhibition/course markers
   const renderLocationMarkers = () => {
@@ -937,6 +1012,7 @@ const MapView = ({
 
   // Add renderPathEndMarkers function to display numbered markers at path endpoints
   // This helps with visibility when clicking on path cards
+  //在每條最短路徑終點放上編號 marker
   const renderPathEndMarkers = () => {
     if (!shortestPaths?.features?.length) return null;
 
@@ -996,6 +1072,7 @@ const MapView = ({
   };
 
   // Render shortest paths only when appropriate
+  //畫出捷運站→地點的最短路徑線
   const renderShortestPaths = () => {
     if (!shortestPaths?.features?.length) return null;
 
