@@ -596,46 +596,47 @@ const MapView = ({
   };
 
   const onEachRoute = (feature, layer) => {
-    // Add invisible buffer layer for easier interaction
-    const buffer = L.geoJSON(feature, {
-      style: routeBuffer,
-      interactive: true,
-    });
-
-    buffer.on({
-      mouseover: () => {
+    const addHitArea = () => {
+      const hit = L.polyline(layer.getLatLngs(), { ...routeBuffer, interactive: true })
+        .addTo(layer._map);
+  
+      // 讓 hit 區在最上層，容易點到
+      hit.bringToFront();
+  
+      const enter = () => {
         setHoveredRoute(feature.properties.MRTCODE);
-        layer.setStyle({
-          ...hoverStyle,
-          color: getLineColor(feature.properties.MRTCODE),
-        });
-      },
-      mouseout: () => {
+        layer.setStyle({ ...hoverStyle, color: getLineColor(feature.properties.MRTCODE) });
+      };
+      const leave = () => {
         setHoveredRoute(null);
         layer.setStyle(styleRoutes(feature));
-      },
-      click: () => {
-        console.log("Clicked route:", feature.properties.MRTCODE);
+      };
+      const select = () => {
         onRouteClick(feature.properties.MRTCODE);
-      },
-    });
-
-    layer.on({
-      mouseover: () => {
-        setHoveredRoute(feature.properties.MRTCODE);
-      },
-      mouseout: () => {
-        setHoveredRoute(null);
-      },
-      click: () => {
-        console.log("Clicked route:", feature.properties.MRTCODE);
-        onRouteClick(feature.properties.MRTCODE);
-      },
-    });
-
-    // Add popup with line name
+      };
+  
+      // 滑鼠 + 觸控兩種事件
+      hit.on({
+        mouseover: enter,
+        mouseout: leave,
+        click: select,
+        touchstart: enter,
+        touchend: leave,
+      });
+  
+      // 清理
+      layer.on("remove", () => {
+        if (layer._map) layer._map.removeLayer(hit);
+      });
+    };
+  
+    // layer 加到地圖後，才能拿到 layer._map
+    if (layer._map) addHitArea();
+    else layer.on("add", addHitArea);
+  
     layer.bindPopup(feature.properties.MRTCODE);
   };
+  
 
   // Create GeoJSON for stations
   const stationGeoJSON = {
