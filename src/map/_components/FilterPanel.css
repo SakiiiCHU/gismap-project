@@ -2,7 +2,7 @@
 .filter-panel {
   background: rgba(40, 40, 40, 0.8) !important;
   border-radius: 14px;       
-  color: #e5e7eb;
+  /* color: #e5e7eb; */
   display: flex;
   flex-direction: column;
   font-size: 13px;             

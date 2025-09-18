@@ -196,7 +196,7 @@ body {
 .panel-stack .filter-panel,
 .panel-stack .filter-results-container {
   background: rgba(40, 40, 40, 0.8) !important;
-  color: #f5f5f5;
+  /* color: #f5f5f5; */
   backdrop-filter: blur(4px);
   border-radius: 20px;
   overflow: hidden;
