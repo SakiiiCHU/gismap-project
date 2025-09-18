@@ -127,6 +127,8 @@
     overflow: auto;
     display: flex; 
     flex-direction: column;
+    /* 避免apply被擋 */
+    overflow-y: auto;
     -webkit-overflow-scrolling: touch;
   }
 
