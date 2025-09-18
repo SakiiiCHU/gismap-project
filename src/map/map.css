@@ -116,7 +116,7 @@
     left: 0; right: 0; bottom: 0;
     z-index: 30;
     width: auto;                 
-    max-height: 85dvh;
+    max-height: 100dvh;
     border-top-left-radius: 16px;
     border-top-right-radius: 16px;
     padding: 10px 12px 10px;     
@@ -127,10 +127,16 @@
     overflow: auto;
     display: flex; 
     flex-direction: column;
-    /* 避免apply被擋 */
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
+  }
+  .panel-stack .filter-panel {
+    transform: translateY(calc(100% - 48px));
+    transition: transform .28s ease;
+  }
+
+  .panel-stack .filter-panel.open {
+    transform: translateY(0);
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    padding: 16px 20px 45px 20px;
 
   }
 
