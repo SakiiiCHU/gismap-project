@@ -130,6 +130,8 @@
     /* 避免apply被擋 */
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+
   }
 
   /* 粗暴隱藏行動端結果面板（但請保留你在 map.jsx 的入口 FAB/按鈕） */
