@@ -1,4 +1,3 @@
-"use client";
 
 import { useRef, useState, useEffect } from "react";
 import {
@@ -837,7 +836,7 @@ const renderStations = () => (
   const renderLocationMarkers = () => {
     // First check if we should show any markers based on the active filter type
     if (activeFilterType === "mrt" && !shortestPaths?.features?.length) {
-      console.log("Not showing MRT markers - no paths available");
+      // console.log("Not showing MRT markers - no paths available");
       return null;
     }
 
@@ -860,9 +859,9 @@ const renderStations = () => (
       return null;
     }
 
-    console.log(
-      `Rendering ${locationsToShow.length} markers for ${activeFilterType} filter`
-    );
+    // console.log(
+    //   `Rendering ${locationsToShow.length} markers for ${activeFilterType} filter`
+    // );
 
     return (
       <MarkerClusterGroup
@@ -886,9 +885,9 @@ const renderStations = () => (
               loc.exhibitions && loc.exhibitions.length > 0;
             const hasCourses = loc.courses && loc.courses.length > 0;
 
-            console.log(
+            {/* console.log(
               `Rendering marker for location ${loc.locat_id} at [${loc.latitude}, ${loc.longitude}]`
-            );
+            ); */}
 
             return (
               <Marker

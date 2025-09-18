@@ -1,4 +1,3 @@
-"use client"
 
 import "./FilterResults.css"
 import { useFetchLocations } from "../hooks/useFetchLocations"
