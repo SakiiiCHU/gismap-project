@@ -112,13 +112,13 @@ const MapView = ({
           courses,
         });
 
-        console.log("[v0] Loaded static data:", {
-          realLocations: realLocations.length,
-          exhibitions: exhibitions.length,
-          courses: courses.length,
-        });
+        // console.log(" Loaded static data:", {
+        //   realLocations: realLocations.length,
+        //   exhibitions: exhibitions.length,
+        //   courses: courses.length,
+        // });
       } catch (error) {
-        console.error("[v0] Error loading static JSON data:", error);
+        console.error(" Error loading static JSON data:", error);
       }
     };
 
@@ -198,7 +198,7 @@ const MapView = ({
     if (locatIds.length === 0) return;
 
     console.log(
-      `[v0] Processing locations for IDs: ${locatIds.join(
+      ` Processing locations for IDs: ${locatIds.join(
         ","
       )}, with type: ${selectedType}`
     );
@@ -252,7 +252,7 @@ const MapView = ({
           return locationData;
         });
 
-        console.log("[v0] Processed location data:", processedLocations);
+        console.log(" Processed location data:", processedLocations);
 
         if (processedLocations.length > 0) {
           setLocations(processedLocations);
@@ -266,10 +266,10 @@ const MapView = ({
   }, [shortestPaths, selectedType, activeFilterType, staticData]); // Add staticData to dependencies
 
   // Debug locations
-  useEffect(() => {
-    console.log("Current locations state:", locations);
-    console.log("Current filteredLocations prop:", filteredLocations);
-  }, [locations, filteredLocations]);
+  // useEffect(() => {
+  //   console.log("Current locations state:", locations);
+  //   console.log("Current filteredLocations prop:", filteredLocations);
+  // }, [locations, filteredLocations]);
 
 
   // 修改 selectedLocationId 的 useEffect 處理邏輯
@@ -841,7 +841,7 @@ const renderStations = () => (
     }
 
     if (activeFilterType === "district" && !filteredLocations?.length) {
-      console.log("Not showing district markers - no filtered locations");
+      // console.log("Not showing district markers - no filtered locations");
       return null;
     }
 
@@ -855,7 +855,7 @@ const renderStations = () => (
         : [];
 
     if (!locationsToShow.length) {
-      console.log("No locations to render markers for");
+      // console.log("No locations to render markers for");
       return null;
     }
 

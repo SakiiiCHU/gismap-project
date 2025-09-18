@@ -24,7 +24,7 @@ export const useFitBounds = ({
     const map = mapRef.current
     if (!map) return
     
-    console.log('filteredLocations identity:', filteredLocations)
+    // console.log('filteredLocations identity:', filteredLocations)
 
 
     const options = {

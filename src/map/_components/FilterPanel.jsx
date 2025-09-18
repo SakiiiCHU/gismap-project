@@ -25,7 +25,7 @@ export default function FilterPanel({
 
   // Update dropdown when selectedMRT changes from map
   useEffect(() => {
-    console.log("🔄 Updating dropdown value to:", selectedMRT);
+    // console.log("🔄 Updating dropdown value to:", selectedMRT);
     if (lineSelectRef.current) {
       lineSelectRef.current.value = selectedMRT || "";
     }
@@ -33,7 +33,7 @@ export default function FilterPanel({
 
   // Update Dist. when MapView changes
   useEffect(() => {
-    console.log("🏙️ Updating district dropdown to:", selectedDistrict);
+    // console.log("🏙️ Updating district dropdown to:", selectedDistrict);
     if (districtSelectRef.current) {
       districtSelectRef.current.value = selectedDistrict || "";
     }
@@ -149,7 +149,6 @@ export default function FilterPanel({
                   className="filter-select"
                 >
                   <option value="">Select MRT line</option>
-                  <option value="all">All Lines</option>
                   {metroData?.mrt_lines?.map((line) => (
                     <option key={line.line} value={line.line}>
                       {line.line}
@@ -164,7 +163,6 @@ export default function FilterPanel({
                     className="filter-select"
                   >
                     <option value="">Select station</option>
-                    <option value="all">All Stations</option>
                     {selectedLineStations?.map((station) => (
                       <option
                         key={station.station_id}
@@ -205,7 +203,6 @@ export default function FilterPanel({
                   className="filter-select"
                 >
                   <option value="">Select district</option>
-                  <option value="all">All Districts</option>
                   {districtData?.features?.map((district) => (
                     <option
                       key={district.properties.TNAME}

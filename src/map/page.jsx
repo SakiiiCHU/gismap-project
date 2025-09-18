@@ -93,26 +93,26 @@ export default function Page() {
 
   // Update stations when line changes
   useEffect(() => {
-    console.log("🔄 Updating stations for line:", selectedMRT);
+    // console.log("🔄 Updating stations for line:", selectedMRT);
 
     if (selectedMRT && metroData.mrt_lines) {
       const selectedLine = metroData.mrt_lines.find(
         (line) => line.line === selectedMRT
       );
       if (selectedLine) {
-        console.log("✅ Found line:", selectedLine.line);
-        console.log("📍 Station count:", selectedLine.stations.length);
+        // console.log("✅ Found line:", selectedLine.line);
+        // console.log("📍 Station count:", selectedLine.stations.length);
         setSelectedLineStations([]);
         setTimeout(() => {
           setSelectedLineStations(selectedLine.stations);
         }, 0);
       } else {
-        console.log("❌ No matching line found for:", selectedMRT);
+        // console.log("❌ No matching line found for:", selectedMRT);
         setSelectedLineStations([]);
       }
     } else {
-      console.log("⚪ Clearing stations - no line selected");
-      setSelectedLineStations([]);
+      // console.log("⚪ Clearing stations - no line selected");
+      // setSelectedLineStations([]);
     }
     setSelectedStation("");
     // Clear filtered paths when changing lines
