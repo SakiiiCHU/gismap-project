@@ -6,7 +6,7 @@
   display: flex;
   flex-direction: column;
   overflow: hidden; 
-  font-size: 14px;
+  /* font-size: 14px; */
   /* 動態高度動畫 */
   max-height: 80px;         
   transition:
@@ -27,21 +27,10 @@
   align-items: center ;
   justify-content: space-between;
   border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
 }
 
-.filter-results-header h4 {
-  font-size: 14px; /* text-sm */
-  font-weight: 500; /* font-medium */
-  color: #e5e7eb;
-  letter-spacing: 0.05em; 
-  margin: 0;
-}
 
-.results-count {
-  font-size: 14px; /* text-sm */
-  color: #6b7280; /* text-gray-500 */
-  letter-spacing: 0.1em; /* tracking-wider */
-}
 
 .results-scroll-area {
   /* Remove fixed height */
@@ -153,10 +142,15 @@ Card style
 
 
 
-
-
-
-
+.no-paths-message {
+  text-align: center;
+  color: #cfd1d5;
+  padding: 1rem;
+  background: #04040466;
+  border-radius: 8px;
+  margin-top: 1rem;
+  font-size: 14px;
+}
 
 
 .no-selection {
@@ -165,6 +159,7 @@ Card style
   justify-content: center;
   height: 100%;
   color: #6b7280;
+  font-size: 14px;
 }
 
 
@@ -232,17 +227,6 @@ Card style
 }
 
 
-
-
-
-.no-paths-message {
-  text-align: center;
-  color: #6b7280;
-  padding: 1rem;
-  background: #f9fafb;
-  border-radius: 8px;
-  margin-top: 1rem;
-}
 
 
 /* =========================

@@ -109,21 +109,32 @@ export default function FilterResults({
       </div>
 
       <div className="results-scroll-area">
-        {activeFilterType === "district" && selectedDistrict && (
-          <div className="results-content">
-            {filteredLocations?.map((location) => (
-              <button key={location.id} className="location-card" onClick={() => onSelectLocation(location.locat_id)}>
-                <div className="location-content">
-                  <div className="location-info">
-                    <h3>{location.name}</h3>
-                    <div className="location-name">{location.locat_name}</div>
-                    <div className="location-address">{location.address}</div>
-                  </div>
-                </div>
-              </button>
-            ))}
+      {activeFilterType === "district" && selectedDistrict && (
+  <div className="results-content">
+    {filteredLocations?.length > 0 ? (
+      filteredLocations.map((location) => (
+        <button
+          key={location.id}
+          className="location-card"
+          onClick={() => onSelectLocation(location.locat_id)}
+        >
+          <div className="location-content">
+            <div className="location-info">
+              <h3>{location.name}</h3>
+              <div className="location-name">{location.locat_name}</div>
+              <div className="location-address">{location.address}</div>
+            </div>
           </div>
-        )}
+        </button>
+      ))
+    ) : (
+      <div className="no-paths-message">
+        {'Click "Apply Filter" to find locations in this district'}
+      </div>
+    )}
+  </div>
+)}
+
 
         {activeFilterType === "mrt" && selectedStationInfo && (
           <div className="results-content">
