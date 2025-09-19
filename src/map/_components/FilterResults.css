@@ -98,13 +98,13 @@ Card style
 }
 
 /* =========================
-   District card text styles
+   search by District card text styles
    - 淺色字 → hover 深色字
 ========================= */
 
 .location-card .location-info h3 {
   margin: 0;
-  font-size: 12px;              
+  font-size: 13px;              
   font-weight: 600;
   color: #d3d6f5;                 
   letter-spacing: 0.2px;
@@ -186,6 +186,7 @@ Card style
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   text-align: left;
   padding: 0.6rem 1.2rem;
+  font-size: 13px;
 }
 
 .path-card:hover {

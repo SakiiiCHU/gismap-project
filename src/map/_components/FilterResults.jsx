@@ -215,9 +215,19 @@ export default function FilterResults({
                 })}
               </div>
             ) : selectedStation && selectedStation !== "all" ? (
-              <div className="no-paths-message">{'Click "Apply Filter" to find nearest locations'}</div>
-            ) : null}
-          </div>
+                Array.isArray(shortestPaths?.features) ? (
+                  // 已送出但查無結果
+                    <div className="no-paths-message">
+                    No exhibitions or courses found near this station.
+                  </div>
+                ) : (
+                  // 尚未送出
+                  <div className="no-paths-message">
+                    Click "Apply Filter" to find nearest locations
+                  </div>
+                )
+              ) : null}
+                        </div>
         )}
 
         {!selectedDistrict && !selectedStationInfo && <div className="no-selection">No selection made</div>}
