@@ -31,6 +31,13 @@ export default function Page() {
 
   const [clickedStationLocations, setClickedStationLocations] = useState([]); //捷運站選取後跟後端資料
 
+  const handleClearAll = () => {
+    setSelectedMRT("");
+    setSelectedStation("");
+    setSelectedDistrict("");
+    setActiveFilterType("mrt"); // FilterPanel 的clear all按鈕清空邏輯
+  };
+
   //避免離開地圖網頁時scroll bar 失效
   useEffect(() => {
     const updateOverflow = () => {
@@ -397,6 +404,7 @@ export default function Page() {
         isLoading={isLoading}
         activeFilterType={activeFilterType}
         onFilterTypeChange={handleFilterTypeChange}
+        onClearAll={handleClearAll} // FilterPanel中的clear all按鈕（傳入 MapView 裡已有的清除函式）
       />
     ),
     [

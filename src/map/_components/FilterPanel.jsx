@@ -18,6 +18,7 @@ export default function FilterPanel({
   activeFilterType,
   activeDataType,
   onFilterTypeChange,
+  onClearAll,
 }) {
   const lineSelectRef = useRef(null);
   const districtSelectRef = useRef(null);
