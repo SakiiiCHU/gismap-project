@@ -117,19 +117,20 @@
     z-index: 30;
     width: auto;                 
     max-height: 100dvh;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
+    border-top-left-radius: 25px !important;
+    border-top-right-radius: 25px !important;
     padding: 10px 12px 10px;     
     /* background: rgba(40, 40, 40, 0.8); */
     /* color: #111; */
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(4px);
     box-shadow: 0 -8px 24px rgba(143, 52, 52, 0.12);
     overflow: auto;
     display: flex; 
     flex-direction: column;
   }
   .panel-stack .filter-panel {
-    transform: translateY(calc(100% - 48px));
+    transform: translateY(calc(100% - 58px));
     transition: transform .28s ease;
   }
 
@@ -168,7 +169,7 @@
 body {
   margin: 0;
   padding: 0;
-
+  background: rgba(40, 40, 40, 0.9);
 }
 
 /* Scrollbar styling */
