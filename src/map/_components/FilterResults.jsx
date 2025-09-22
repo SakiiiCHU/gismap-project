@@ -1,5 +1,5 @@
 
-import "./FilterResults.css"
+import "./FilterResults_light.css"
 import { useFetchLocations } from "../hooks/useFetchLocations"
 import { useMemo } from "react"
 

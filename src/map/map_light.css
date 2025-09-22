@@ -120,7 +120,7 @@
     border-top-left-radius: 25px !important;
     border-top-right-radius: 25px !important;
     padding: 10px 12px 10px;     
-    /* background: rgba(40, 40, 40, 0.8); */
+    background: rgba(190, 96, 96, 0.8) !important; 
     /* color: #111; */
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(4px);
@@ -138,7 +138,12 @@
     transform: translateY(0);
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
     padding: 16px 20px 45px 20px;
-
+  }
+  .panel-stack .filter-panel,
+  .panel-stack .filter-panel.open {
+    background: rgba(141, 140, 140, 0.8) !important;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
   }
 
   /* 粗暴隱藏行動端結果面板（但請保留你在 map.jsx 的入口 FAB/按鈕） */
@@ -196,7 +201,7 @@ body {
 /* 統一 FilterPanel + FilterResults 玻璃感外觀 */
 .panel-stack .filter-panel,
 .panel-stack .filter-results-container {
-  background: rgba(163, 162, 162, 0.7) !important;
+  background: rgba(192, 191, 191, 0.8) !important;
   /* 整個panel-stack改成淺色 */
   /* background: rgba(181, 180, 178, 0.6) !important;  */
   backdrop-filter: blur(4px);

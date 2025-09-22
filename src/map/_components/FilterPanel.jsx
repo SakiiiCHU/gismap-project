@@ -1,6 +1,6 @@
 
 import { useEffect, useRef, useState } from "react";
-import "./FilterPanel.css";
+import "./FilterPanel_light.css";
 
 export default function FilterPanel({
   metroData,

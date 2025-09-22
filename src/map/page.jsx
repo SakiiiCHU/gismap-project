@@ -1,7 +1,7 @@
 
 import { useState, useEffect, useMemo, useCallback } from "react";
 import FilterPanel from "./_components/FilterPanel";
-import "./map.css";
+import "./map_light.css";
 import FilterResults from "./_components/FilterResults";
 import MapView from "./_components/MapView";
 import { fetchLocationsByDistrict } from "../utils/staticDataLoader";
