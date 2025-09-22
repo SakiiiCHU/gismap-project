@@ -7,8 +7,8 @@
   height: 50px;
   /* background: white; */
   background: rgba(15, 15, 16, 0.6);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  /* backdrop-filter: blur(4px); */
+  /* -webkit-backdrop-filter: blur(4px); */
   z-index: 1000;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -51,22 +51,58 @@
 }
 
 
+/* 兩條線：用絕對定位，避免 flex 壓縮 */
 .hamburger .line {
-  display: block;
-  height: 2px; /* 線條粗度 */
-  background-color: #cfc8c8;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #fff; /* 改成白色更清楚 */
   border-radius: 2px;
-  transition: transform 0.3s, opacity 0.3s;
+  transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
 }
 
-/* 漢堡變成 X 的狀態 */
+/* 初始狀態 */
+.hamburger .line1 {
+  top: 0;
+}
+.hamburger .line2 {
+  bottom: 0;
+}
+
+/* 變叉叉狀態 */
 .hamburger.is-active .line1 {
+  top: 50%;
+  transform: rotate(45deg);
+}
+
+.hamburger.is-active .line2 {
+  top: 50%;  /* 改用 top:50%，不再用 bottom */
+  transform: rotate(-45deg);
+}
+
+.hamburger .line {
+  position: absolute;
+  left: 0;
+  width: 100%;
+
+  /* Safari 相關強化 */
+  -webkit-transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  -webkit-transform-origin: center center;
+  -webkit-transition: -webkit-transform 0.3s ease, opacity 0.3s ease;
+}
+
+
+
+/* 漢堡變成 X 的狀態 */
+/* .hamburger.is-active .line1 {
   transform: translateY(5px) rotate(45deg);
 }
 
 .hamburger.is-active .line2 {
   transform: translateY(-5px) rotate(-45deg);
-}
+} */
 
 
 /* Overlay menu */
