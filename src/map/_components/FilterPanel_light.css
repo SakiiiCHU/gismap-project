@@ -16,7 +16,7 @@
   justify-content: space-between;
   align-items: center;
   margin: 5px 8px 5px 8px;
-  font-size: 14px;
+  font-size: 12px;
   color: #222121;    /* 淺色底的深色字體 */
   font-weight: 400;
 }
@@ -25,12 +25,13 @@
   border: none;
   cursor: pointer;
   transition: opacity 0.2s ease;
-  text-decoration: underline;
-  font-weight: 400;
+  /* text-decoration: 1px underline; */
+  color: #222121;    /* 淺色底的深色字體 */
+  font-size: 12px;
 }
 .clear-all:hover {
   color: #4b4646; 
-  text-decoration: underline;
+  text-decoration: 1px underline;
   transform: scale(1.08); 
 }
 
@@ -164,8 +165,12 @@
     justify-content: space-between;
     align-items: center;
     margin: 8px 10px 10px 10px; /* 手機版間距 */
-    font-size: 17px;
+    font-size: 15px;
     font-weight: 400;
+  }
+  .clear-all {
+    font-size: 15px;
+    
   }
 
   .filter-header::before {

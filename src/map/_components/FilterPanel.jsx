@@ -62,13 +62,13 @@ export default function FilterPanel({
         <h2 className="font-zeyada font-bold text-xl">FILTER</h2>
         <div style={{ marginLeft: "auto" }}>
           <button
-            className="clear-all"
+            className="clear-all font-kanit"
             onClick={(e) => {
               e.stopPropagation(); // 避免觸發 panel 開合
               onClearAll?.();
             }}
           >
-            Clear all
+            Clear All
           </button>
         </div>
       </div>
@@ -107,8 +107,8 @@ export default function FilterPanel({
         </div>
 
         {/* --- 搜尋方式 Tabs --- */}
-        <div className="filter-header">
-          <h2>Search By...</h2>
+        <div className="filter-header font-kanit">
+          <span>Search By...</span>
         </div>
         <div className="filter-section">
           <div className="filter-type-tabs pill-tabs">

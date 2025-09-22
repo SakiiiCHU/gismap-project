@@ -18,6 +18,13 @@ export default function Navbar() {
         GIS Map Explorer
       </div>
 
+    {/* 電腦版選單 */}
+      <ul className="navbar__menu">
+        <li><Link to="/">Home</Link></li>
+        <li><Link to="/explore">Explore</Link></li>
+        <li><a href="#">About</a></li>
+      </ul>
+
       <button
         className={`hamburger ${menuOpen ? "is-active" : ""}`}
         onClick={toggleMenu}
@@ -28,14 +35,27 @@ export default function Navbar() {
       </button>
 
       <div className={`overlay-menu ${menuOpen ? "open" : ""}`}>
-        
+        <div className="overlay-logo font-zeyada font-bold text-2xl">
+            GIS Map Explorer
+        </div>
         <ul className="overlay-menu__list">
-          <li><Link to="/" onClick={closeMenu}>Home</Link></li>
-          <li><Link to="/explore" onClick={closeMenu}>Explore</Link></li>
-          <li><a href="#" onClick={closeMenu}>About</a></li>
+          <li>
+            <Link to="/" onClick={closeMenu}>
+              Home
+            </Link>
+          </li>
+          <li>
+            <Link to="/explore" onClick={closeMenu}>
+              Explore
+            </Link>
+          </li>
+          <li>
+            <a href="#" onClick={closeMenu}>
+              About
+            </a>
+          </li>
         </ul>
       </div>
-
     </nav>
   );
 }
