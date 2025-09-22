@@ -18,7 +18,10 @@
   left: 0;
   width: 100vw;
   height: 50px;
-  background: white;
+  /* background: white; */
+  background: rgba(15, 15, 16, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
   z-index: 1000;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
   display: flex;
@@ -30,6 +33,7 @@
 .navbar__logo {
   font-weight: 500;
   font-size: 16px;
+  color: #cfc8c8;
 }
 
 .navbar__menu {
@@ -40,7 +44,7 @@
 
 .navbar__menu li a {
   text-decoration: none;
-  color: #333;
+  color: #cfc8c8;
   font-size: 15px;
 }
 

@@ -148,7 +148,7 @@
     display: none !important;
   }
 
-  /* 若 Leaflet 控制被底欄擋住，可加 */
+  /* 若 Leaflet 控制被底欄擋住，可加這 */
   .leaflet-control-container {
     margin-bottom: calc(70px + env(safe-area-inset-bottom));
   }
@@ -196,7 +196,9 @@ body {
 /* 統一 FilterPanel + FilterResults 玻璃感外觀 */
 .panel-stack .filter-panel,
 .panel-stack .filter-results-container {
-  background: rgba(58, 57, 57, 0.8) !important;
+  background: rgba(163, 162, 162, 0.7) !important;
+  /* 整個panel-stack改成淺色 */
+  /* background: rgba(181, 180, 178, 0.6) !important;  */
   backdrop-filter: blur(4px);
   border-radius: 20px;
   overflow: hidden;

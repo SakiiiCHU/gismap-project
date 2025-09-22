@@ -1,0 +1,200 @@
+/* --- FilterPanel 容器 --- */
+.filter-panel {
+  background: rgba(40, 40, 40, 0.8) !important;
+  border-radius: 14px;       
+  /* color: #e5e7eb; */
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;             
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+}
+
+/* --- Header --- */
+.filter-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 4px 0 4px 0;
+  font-size: 14px;
+  color: #222121;    /* 淺色底的深色字體 */
+  font-weight: 400;
+}
+.clear-all {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+.clear-all:hover {
+  color: #000; 
+  text-decoration: underline;
+}
+
+/* --- 區塊 --- */
+.filter-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  /* margin-top: 10px; */
+}
+
+/* --- pill Tabs --- */
+.pill-tabs {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  /* 改成淺色模式 */
+  border: 0.9px solid rgba(76, 75, 75, 0.8);   /* pills外框色 */
+  border-radius: 9999px;
+  overflow: hidden;
+  background: rgba(234, 233, 232, 0.4);   /* pills內部色 */
+  width: 100%;
+  -webkit-transform: translateZ(0);
+}
+.pill-cursor {
+  position: absolute;
+  top: 1px;
+  left: 1px;
+  width: calc(50% - 1px);
+  height: calc(100% - 2px);
+  background: rgba(32, 32, 32, 0.6); /* tab底色 */
+  border-radius: 9999px;
+  transition: transform 0.3s ease;
+  z-index: 0;
+}
+.pill-tab {
+  background: transparent;
+  border: none;
+  /* color: #bbb; */
+  color: #2d2b2b; /* tab裡面字體顏色 */
+  font-weight: 400;
+  cursor: pointer;
+  padding: 0;
+  z-index: 1;
+  transition: color 0.2s ease;
+  font-size: 13px;        
+  height: 30px;           
+  line-height: 30px;
+}
+.pill-tab.active { color: rgb(251, 249, 249); }
+
+/* --- Dropdown (Select) --- */
+.dropdown-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; 
+}
+.filter-select {
+  width: 100%;
+  /* border: 0.75px solid rgba(255,255,255,.3); */
+  border: 0.9px solid rgba(76, 75, 75, 0.8);   /* pills外框色 */
+  border-radius: 9999px;
+  background: rgba(234, 233, 232, 0.4);   /* pills內部色 */
+  /* color: #f1f1f1; */
+  color: #2d2b2b;
+  font-size: 13px;    
+  padding: 0px 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 30px;            
+  line-height: 26px;
+  cursor: pointer;
+  -webkit-transform: translateZ(0);
+}
+.filter-select option { color: #000; }
+.filter-select:focus {
+  outline: none;
+  box-shadow: none;
+  /* border-color: inherit; */
+  /* 明確指定點選完下拉式表單後的邊框顏色 */
+  border-color: rgba(76, 75, 75, 0.5); 
+
+}
+
+/* --- Apply Button --- */
+.apply-button {
+  width: 100%;
+  border-radius: 9999px;
+  background: rgba(67, 66, 61, 0.9);
+  color: #e2dddd;
+  /* border: 1px solid rgba(174, 161, 112, 0.8);    */
+  height: 30px;            
+  line-height: 30px;
+  font-size: 13px;          
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background 0.2s ease;
+}
+.apply-button:hover:not(:disabled) { 
+  background-color: rgba(234, 233, 232, 0.4); 
+  color: #000;
+  border: 1.4px solid rgba(123, 113, 72, 0.9);   
+}
+.apply-button:disabled {
+  /* background-color: rgba(255,255,255,0.05); */
+  background: rgba(242, 241, 240, 0.3);
+  color: #acaaaa;
+  cursor: not-allowed;
+  border: none;
+}
+
+/* --- 手機 RWD (維持原尺寸) --- */
+@media (max-width: 768px) {
+  .filter-panel {
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -8px 24px rgba(0,0,0,.5);
+  }
+
+  /* .filter-panel.open { 
+    transform: translateY(0);
+    padding: 22px 18px 22px 18px;            
+    max-height: 100dvh;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+   } */
+
+   .filter-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0 14px 0;
+    font-size: 18px;
+  }
+
+  .filter-header::before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 42px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.6); 
+  }
+  
+  .pill-tab {
+    height: 36px;
+    line-height: 36px;
+    font-size: 15px; 
+  }
+
+  .filter-select {
+    height: 36px;  
+    font-size: 15px;  
+    padding: 0px 60px;         
+  }
+
+  .apply-button {
+    height: 36px;  
+    font-size: 15px;           
+  }
+  .dropdown-group {
+    gap: 18px; 
+  }
+  .filter-section {
+    gap: 18px;
+  }
+}

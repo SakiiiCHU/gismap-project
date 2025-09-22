@@ -171,6 +171,10 @@
   height: 36px !important;
   background-size: 16px 16px !important;
 }
+/* navbar高度移除之後leaflet-control-layers-toggle需要下移 */
+.leaflet-top.leaflet-right {
+  top: 3.5rem; 
+}
 
 .leaflet-control-layers-expanded {
   padding: 12px !important;
