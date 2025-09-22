@@ -74,12 +74,46 @@
   width: var(--panel-w, 245px);
   display: flex;
   flex-direction: column;
-  /* gap: 12px;               */
+  /* gap: 12px;   讓 filter panel 和 results 中間無間隙     */
   z-index: 40;
   pointer-events: none;
 }
 .panel-stack > * {
   pointer-events: auto;   /* 子元素可點擊 */
+}
+
+/* 統一電腦版 filter-panel 與 results 外觀 */
+@media (min-width: 769px) {
+  .panel-stack .filter-panel,
+  .panel-stack .filter-results-container {
+    background: rgba(192, 191, 191, 0.8) !important;
+    -webkit-backdrop-filter: blur(4px);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    overflow: hidden;
+  }
+/* 上下接合圓角處理 */
+  .panel-stack .filter-panel {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    padding: 16px 20px;
+  }
+
+  .panel-stack .filter-results-container {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    padding: 16px 20px;
+    max-height: 300px;
+    overflow-y: auto;
+    color: #f5f5f5;
+  }
+
+  .panel-stack .filter-panel *,
+  .panel-stack .filter-results-container * {
+    font-family: inherit;
+    letter-spacing: 0.3px;
+    line-height: 1.4;
+  }
 }
 
 /* 讓 FilterPanel 不再用絕對定位 */
@@ -95,50 +129,52 @@
   position: relative;
   width: 100%;
   z-index: 35;
+  overflow-y: auto;
 }
-
-/* 手機：只顯示 bottom-sheet 的 FilterPanel */
+/* ===== 手機版（768px 以下）Bottom Sheet 設定 ===== */
 @media (max-width: 768px) {
   .panel-stack {
-    top: auto; left: 0; right: 0; bottom: 0;
+    top: auto;
+    left: 0;
+    right: 0;
+    bottom: 0;
     width: 100%;
   }
-  .panel-stack .filter-results-container {
-    display: none !important;
-  }
-}
 
-/* 手機版 RWD */
-@media (max-width: 768px) {
-  /* 面板改為 bottom-sheet 全寬覆蓋 */
+  /* Bottom Sheet 面板樣式 */
   .filter-panel {
     position: absolute;
-    left: 0; right: 0; bottom: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     z-index: 30;
-    width: auto;                 
+    width: auto;
     max-height: 100dvh;
     border-top-left-radius: 25px !important;
     border-top-right-radius: 25px !important;
-    padding: 10px 12px 10px;     
-    background: rgba(190, 96, 96, 0.8) !important; 
-    /* color: #111; */
+    padding: 10px 12px 10px;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(4px);
     box-shadow: 0 -8px 24px rgba(168, 167, 167, 0.12);
     overflow: auto;
-    display: flex; 
+    display: flex;
     flex-direction: column;
   }
+
+  /* filter-panel 關閉狀態 */
   .panel-stack .filter-panel {
     transform: translateY(calc(100% - 58px));
-    transition: transform .28s ease;
+    transition: transform 0.28s ease;
   }
 
+  /* filter-panel 展開狀態 */
   .panel-stack .filter-panel.open {
     transform: translateY(0);
     padding-bottom: calc(16px + env(safe-area-inset-bottom));
     padding: 16px 20px 45px 20px;
   }
+
+  /* 關閉與展開統一背景色與模糊（手機版） */
   .panel-stack .filter-panel,
   .panel-stack .filter-panel.open {
     background: rgba(141, 140, 140, 0.8) !important;
@@ -146,24 +182,20 @@
     -webkit-backdrop-filter: blur(4px);
   }
 
-  /* 粗暴隱藏行動端結果面板（但請保留你在 map.jsx 的入口 FAB/按鈕） */
-  /* 兩個 class 一起處理，避免命名不一致 */
-  .filter-results,
-  .filter-results-container {
+  /* 手機版：隱藏 filter-results（如無特殊需求） */
+  .panel-stack .filter-results-container {
     display: none !important;
   }
 
-  /* 若 Leaflet 控制被底欄擋住，可加這 */
+  .filter-results {
+    display: none !important;
+  }
+
+  /* 預留底部安全區 margin，避免被 Home Indicator 蓋住 */
   .leaflet-control-container {
     margin-bottom: calc(70px + env(safe-area-inset-bottom));
   }
 }
-
-
-/* iOS Home Indicator 安全區（給底欄留白用） */
-/* @supports (padding-bottom: env(safe-area-inset-bottom)) {
-  .filter-panel { padding-bottom: calc(100px + env(safe-area-inset-bottom)); }
-} */
 
 
 /* Global styles for the map application */
@@ -179,7 +211,7 @@ body {
 
 /* Scrollbar styling */
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -194,47 +226,4 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
-}
-
-/* ========== 視覺統一樣式 ========== */
-
-/* 統一 FilterPanel + FilterResults 玻璃感外觀 */
-.panel-stack .filter-panel,
-.panel-stack .filter-results-container {
-  background: rgba(192, 191, 191, 0.8) !important;
-  /* 整個panel-stack改成淺色 */
-  /* background: rgba(181, 180, 178, 0.6) !important;  */
-  backdrop-filter: blur(4px);
-  border-radius: 20px;
-  overflow: hidden;
-}
-
-/* 上下接合圓角處理 */
-.panel-stack .filter-panel {
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.panel-stack .filter-results-container {
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-  color: #f5f5f5;
-}
-
-/* 統一內部排版 spacing */
-.panel-stack .filter-panel *,
-.panel-stack .filter-results-container * {
-  font-family: inherit;
-  letter-spacing: 0.3px;
-  line-height: 1.4;
-}
-
-.panel-stack .filter-panel {
-  padding: 16px 20px;
-}
-
-.panel-stack .filter-results-container {
-  padding: 16px 20px;
-  max-height: 300px;         
-  overflow-y: auto;
 }
