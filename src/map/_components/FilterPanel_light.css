@@ -182,7 +182,7 @@
     width: 42px;
     height: 4px;
     border-radius: 999px;
-    background: rgba(255,255,255,.6); 
+    background: #596954; /* 手機版頂部橫條顏色*/
   }
   
   .pill-tab {
