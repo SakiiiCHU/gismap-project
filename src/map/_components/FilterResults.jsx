@@ -98,8 +98,8 @@ export default function FilterResults({
     (filteredLocations?.length > 0 || shortestPaths?.features?.length > 0) ? "expanded" : ""
   }`}
 >      <div className="filter-results-header">
-        <h4 className="text-sm font-medium text-gray-700 tracking-wide">Results</h4>
-        <span className="text-sm text-gray-500 tracking-wider">
+        <h4 className=" tracking-wide">Results</h4>
+        <span className="tracking-wider">
           {activeFilterType === "district" && filteredLocations.length > 0
             ? `${filteredLocations.length} ${selectedType}`
             : selectedStationInfo && shortestPathsSorted.length > 0
@@ -161,21 +161,21 @@ export default function FilterResults({
                       </div>
                       {locationDetails ? (
                         <div className="location-details">
-                          <div className="location-name font-medium text-base">{locationDetails.locat_name}</div>
-                          <div className="location-address text-sm text-gray-600 mb-2">{locationDetails.address}</div>
+                          <div className="location-name">{locationDetails.locat_name}</div>
+                          <div className="location-address mb-2">{locationDetails.address}</div>
 
                           {/* 顯示展覽或課程 */}
                           {selectedType === "exhibition" && locationDetails.exhibitions && (
                             <div className="location-exhibitions">
-                              <div className="font-medium mb-1">Exhibitions:</div>
+                              <div className=" mb-1">Exhibitions:</div>
                               <div className="space-y-3">
                                 {locationDetails.exhibitions.map((exhibition, index) => (
                                   <div
                                     key={`exhibition-${exhibition.e_id || index}`}
-                                    className="exhibition-item border-l-2 border-blue-500 pl-2"
+                                    className="exhibition-item border-l-2 border-blue-500"
                                   >
-                                    <div className="exhibition-name font-medium">{exhibition.e_name}</div>
-                                    <div className="exhibition-dates">
+                                    <div className="exhibition-name pl-1">{exhibition.e_name}</div>
+                                    <div className="exhibition-dates pl-1">
                                       {formatDate(exhibition.e_startdate)} - {formatDate(exhibition.e_enddate)}
                                     </div>
                                   </div>
@@ -186,15 +186,15 @@ export default function FilterResults({
 
                           {selectedType === "courses" && (locationDetails.courses || locationDetails.course) && (
                             <div className="location-courses">
-                              <div className="font-medium mb-1">Courses:</div>
+                              <div className=" mb-1">Courses:</div>
                               <div className="space-y-3">
                                 {(locationDetails.courses || locationDetails.course || []).map((course, index) => (
                                   <div
                                     key={`course-${course.c_id || index}`}
                                     className="course-item border-l-2 border-green-500 pl-2"
                                   >
-                                    <div className="course-name font-medium">{course.c_name || course.name}</div>
-                                    <div className="course-dates text-xs text-gray-600">
+                                    <div className="course-name ">{course.c_name || course.name}</div>
+                                    <div className="course-dates ">
                                       {formatDate(course.c_startdate || course.startdate)} -{" "}
                                       {formatDate(course.c_enddate || course.enddate)}
                                     </div>

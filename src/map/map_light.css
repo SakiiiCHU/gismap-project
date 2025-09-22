@@ -82,13 +82,17 @@
   pointer-events: auto;   /* 子元素可點擊 */
 }
 
-/* 統一電腦版 filter-panel 與 results 外觀 */
+
+/* =========================
+ 統一電腦版 filter-panel 與 results 外觀 
+========================= */
 @media (min-width: 769px) {
   .panel-stack .filter-panel,
   .panel-stack .filter-results-container {
-    background: rgba(192, 191, 191, 0.8) !important;
-    -webkit-backdrop-filter: blur(4px);
-    backdrop-filter: blur(4px);
+    /* 電腦版FilterPanel+FilterResults顏色背景調這邊 */
+    background: rgba(192, 191, 191, 0.7) !important;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
     border-radius: 20px;
     overflow: hidden;
   }
@@ -110,7 +114,7 @@
 
   .panel-stack .filter-panel *,
   .panel-stack .filter-results-container * {
-    font-family: inherit;
+    /* font-family: inherit; */
     letter-spacing: 0.3px;
     line-height: 1.4;
   }
@@ -131,7 +135,11 @@
   z-index: 35;
   overflow-y: auto;
 }
-/* ===== 手機版（768px 以下）Bottom Sheet 設定 ===== */
+
+
+/* =========================
+===== 手機版（768px 以下）Bottom Sheet 設定 =====
+========================= */
 @media (max-width: 768px) {
   .panel-stack {
     top: auto;
@@ -163,7 +171,7 @@
 
   /* filter-panel 關閉狀態 */
   .panel-stack .filter-panel {
-    transform: translateY(calc(100% - 58px));
+    transform: translateY(calc(100% - 55px));
     transition: transform 0.28s ease;
   }
 
@@ -177,7 +185,8 @@
   /* 關閉與展開統一背景色與模糊（手機版） */
   .panel-stack .filter-panel,
   .panel-stack .filter-panel.open {
-    background: rgba(141, 140, 140, 0.8) !important;
+    /* 手機版FilterPanel+FilterResults顏色背景調這邊 */
+    background: rgba(152, 152, 152, 0.8) !important;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }

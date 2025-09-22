@@ -17,12 +17,12 @@
 
 /* 當有結果時加入這個 class */
 .panel-stack .filter-results-container.expanded {
-  max-height: calc(100dvh - 50px - 16px - 276px - 30px);
+  max-height: calc(100dvh - 4.75rem - 16px - 276px - 30px);
   overflow-y: auto;
 }
 
 .filter-results-header {
-  padding: 0.75rem 1rem;
+  padding: 13px 9px;
   display: flex;
   align-items: center ;
   justify-content: space-between;
@@ -37,7 +37,7 @@
   /* height: calc(50vh - 8rem); */
   flex: 1;
   overflow-y: auto;
-  padding: 0.9rem 0.5rem ;
+  padding: 13px 8px;
 }
 
 /* Scrollbar styling */
@@ -178,14 +178,13 @@ Card style
   background: rgba(0, 0, 0, 0.35);
   border: 1px solid #e5e7eb;
   border-radius: 10px;
-  padding: 0.8rem;
   margin-bottom: 1rem;
   transition: all 0.3s ease;
   width: 100%;
   max-width: 400px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   text-align: left;
-  padding: 0.6rem 1.2rem;
+  padding: 15px 14px;
   font-size: 13px;
 }
 

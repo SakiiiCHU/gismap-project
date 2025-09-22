@@ -44,7 +44,7 @@ export default function FilterPanel({
     <div
       className={`filter-panel ${
         open ? "open" : ""
-      }  backdrop-blur-md rounded-2xl p-6  text-white`}
+      }   p-6  text-white`}
       onClick={(e) => {
         // 點到 panel 本體或 header（但不是 clear-all）都可以開合
         const clickedClearAll = e.target.closest(".clear-all");
@@ -59,7 +59,7 @@ export default function FilterPanel({
     >
       {/* header（非觸發區，只負責顯示） */}
       <div className="filter-header">
-        <h2>Filters</h2>
+        <h2 className="font-zeyada font-bold text-xl">FILTER</h2>
         <div style={{ marginLeft: "auto" }}>
           <button
             className="clear-all"

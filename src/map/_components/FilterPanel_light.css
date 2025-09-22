@@ -15,10 +15,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 4px 0 4px 0;
+  margin: 5px 8px 5px 8px;
   font-size: 14px;
   color: #222121;    /* 淺色底的深色字體 */
-  font-weight: 500;
+  font-weight: 400;
 }
 .clear-all {
   background: transparent;
@@ -38,7 +38,7 @@
 .filter-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  /* gap: 12px; */
   /* margin-top: 10px; */
 }
 
@@ -144,6 +144,7 @@
   border: none;
 }
 
+
 /* --- 手機 RWD (維持原尺寸) --- */
 @media (max-width: 768px) {
   .filter-panel {
@@ -162,8 +163,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 8px 0 10px 0; /* 手機版間距 */
-    font-size: 18px;
+    margin: 8px 10px 10px 10px; /* 手機版間距 */
+    font-size: 17px;
+    font-weight: 400;
   }
 
   .filter-header::before {
@@ -179,19 +181,19 @@
   }
   
   .pill-tab {
-    height: 36px;
+    height: 44px;
     line-height: 36px;
     font-size: 15px; 
   }
 
   .filter-select {
-    height: 36px;  
+    height: 44px;  
     font-size: 15px;  
     padding: 0px 60px;         
   }
 
   .apply-button {
-    height: 36px;  
+    height: 44px;  
     font-size: 15px;           
   }
   .dropdown-group {

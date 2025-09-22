@@ -2,6 +2,8 @@
 import { heroui } from '@heroui/react'
 module.exports = {
   content: [
+    "./index.html",               // vite 專案需要加
+    "./src/**/*.{js,ts,jsx,tsx}", // 你的 src 下所有 jsx/tsx 都要掃描
     './app/**/*.{js,ts,jsx,tsx,mdx}',
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -22,6 +24,16 @@ module.exports = {
         en: ['"Unna"', 'serif'],
         // 特殊字體
         kanit: ['"Kanit"', 'serif'],
+
+        cascadia: ['"Cascadia Mono"', 'monospace'],
+        martian: ['"Martian Mono"', 'monospace'],
+        robotoMono: ['"Roboto Mono"', 'monospace'],
+        mozilla: ['"Mozilla Text"', 'sans-serif'],
+        montserrat: ['"Montserrat"', 'sans-serif'],
+        slabo: ['"Slabo 13px"', 'serif'],
+        trispace: ['"Trispace"', 'sans-serif'],
+        ysabeau: ['"Ysabeau Office"', 'sans-serif'],
+        zeyada: ['"Zeyada"'],
       },
       fontWeight: {
         regular: 400,

@@ -15,8 +15,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 4px 0 4px 0;
+  margin: 5px 8px 5px 8px;
   font-size: 14px;
+  color: #c1bcbc;    /* 淺色底的深色字體 */
+  font-weight: 400;
 }
 .filter-header h2 {
   font-weight: 300;
@@ -35,7 +37,7 @@
 .filter-section {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  /* gap: 12px; */
   /* margin-top: 10px; */
 }
 
