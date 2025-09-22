@@ -90,7 +90,7 @@
   .panel-stack .filter-panel,
   .panel-stack .filter-results-container {
     /* 電腦版FilterPanel+FilterResults顏色背景調這邊 */
-    background: rgba(192, 191, 191, 0.7) !important;
+    background: rgba(195, 196, 195, 0.7) !important;
     -webkit-backdrop-filter: blur(2px);
     backdrop-filter: blur(2px);
     border-radius: 20px;
@@ -186,7 +186,8 @@
   .panel-stack .filter-panel,
   .panel-stack .filter-panel.open {
     /* 手機版FilterPanel+FilterResults顏色背景調這邊 */
-    background: rgba(152, 152, 152, 0.8) !important;
+    /* background: rgba(152, 152, 152, 0.8) !important; */
+    background: rgba(153, 155, 153, 0.7) !important;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
   }

@@ -127,7 +127,7 @@
 
 .overlay-menu__list li a {
   font-size: 24px;
-  color: #fff;
+  color: #c2e4b9;
   text-decoration: none;
   transition: color 0.2s;
   display: block;
@@ -137,7 +137,7 @@
 }
 
 .overlay-menu__list li a:hover {
-  color: #c2e4b9;
+  color: #fff;
 }
 
 /* 手機版樣式 */
