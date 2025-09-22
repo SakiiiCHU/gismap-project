@@ -17,6 +17,7 @@ import "leaflet/dist/leaflet.css";
 import "./MapView.css";
 import { useFitBounds } from "./useFitBounds"; // Import the new hook
 import MarkerClusterGroup from "@changey/react-leaflet-markercluster";
+import LoadingOverlay from "../../components/LoadingOverlay";
 
 // Fix Leaflet's default icon issue
 //  自訂 icon（展覽 / 課程）+ 修正 Leaflet 預設圖示路徑問題
@@ -84,6 +85,17 @@ const MapView = ({
   const prevActiveFilterType = useRef(activeFilterType);
   const prevSelectedStation = useRef(selectedStation);
   const prevSelectedDistrict = useRef(selectedDistrict);
+
+  // Loading state for initial data fetch
+  const [isLoading, setIsLoading] = useState(false); // Loading state （測試時改成true）
+  useEffect(() => {
+    setTimeout(() => setIsLoading(false), 2000); // 之後可改成 fetch 完成後再關閉
+  }, []);
+
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setIsLoading(false), 4000); // 模擬3秒鐘loading
+  //   return () => clearTimeout(timer);
+  // }, []); // 這段是測試loading動畫用的
 
 
 // ------------------------------
@@ -1103,6 +1115,7 @@ const renderStations = () => (
 
   return (
     <div className="map-view">
+     {isLoading && <LoadingOverlay text="Loading map..." />}
       <MapContainer
         center={center}
         zoom={12}
