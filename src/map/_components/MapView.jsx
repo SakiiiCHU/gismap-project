@@ -86,56 +86,51 @@ const MapView = ({
   const prevSelectedStation = useRef(selectedStation);
   const prevSelectedDistrict = useRef(selectedDistrict);
 
-  // Loading state for initial data fetch
-  const [isLoading, setIsLoading] = useState(false); // Loading state （測試時改成true）
-  useEffect(() => {
-    setTimeout(() => setIsLoading(false), 2000); // 之後可改成 fetch 完成後再關閉
-  }, []);
-
-  // useEffect(() => {
-  //   const timer = setTimeout(() => setIsLoading(false), 4000); // 模擬3秒鐘loading
-  //   return () => clearTimeout(timer);
-  // }, []); // 這段是測試loading動畫用的
+  const [isLoading, setIsLoading] = useState(true);
 
 
 // ------------------------------
 // 一次性載入靜態資料/ 存進 staticData   
 // 載入成功 / 失敗會 log 出來（debug用）
+// 載入完成後會關閉 isLoading 狀態
 // ------------------------------
-  useEffect(() => {
-    const loadStaticData = async () => {
-      try {
-        const base = import.meta.env.BASE_URL; //  自動判斷是 dev 或 build
+useEffect(() => {
+  const loadStaticData = async () => {
+    const start = Date.now();
+    try {
+      const base = import.meta.env.BASE_URL; // 自動判斷是 dev 或 build
 
-        const [realLocationsRes, exhibitionsRes, coursesRes] =
-          await Promise.all([
-            fetch(`${base}map/real_location.json`),
-            fetch(`${base}map/exhibition.json`),
-            fetch(`${base}map/courses.json`),
-          ]);
+      const [realLocationsRes, exhibitionsRes, coursesRes] =
+        await Promise.all([
+          fetch(`${base}map/real_location.json`),
+          fetch(`${base}map/exhibition.json`),
+          fetch(`${base}map/courses.json`),
+        ]);
 
-        const realLocations = await realLocationsRes.json();
-        const exhibitions = await exhibitionsRes.json();
-        const courses = await coursesRes.json();
+      const realLocations = await realLocationsRes.json();
+      const exhibitions = await exhibitionsRes.json();
+      const courses = await coursesRes.json();
 
-        setStaticData({
-          realLocations,
-          exhibitions,
-          courses,
-        });
+      setStaticData({
+        realLocations,
+        exhibitions,
+        courses,
+      });
 
-        // console.log(" Loaded static data:", {
-        //   realLocations: realLocations.length,
-        //   exhibitions: exhibitions.length,
-        //   courses: courses.length,
-        // });
-      } catch (error) {
-        console.error(" Error loading static JSON data:", error);
-      }
-    };
+      // 確保至少顯示 1.5 秒
+      const elapsed = Date.now() - start;
+      const delay = Math.max(0, 1000 - elapsed);
+      setTimeout(() => setIsLoading(false), delay);
 
-    loadStaticData();
-  }, []);
+    } catch (error) {
+      console.error("Error loading static JSON data:", error);
+      setIsLoading(false); // 出錯也要關掉 loading
+    }
+  };
+
+  loadStaticData();
+}, []);
+
 
 // ------------------------------
 // 偵測篩選條件變動 → 清空地圖上舊有的 marker / popup
