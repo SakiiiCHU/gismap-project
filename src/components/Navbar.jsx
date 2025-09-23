@@ -18,11 +18,33 @@ export default function Navbar() {
         GIS Map Explorer
       </div>
 
-    {/* 電腦版選單 */}
+      {/* 電腦版選單 */}
+      {/* 電腦版選單 */}
       <ul className="navbar__menu">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/explore">Explore</Link></li>
-        <li><a href="#">About</a></li>
+        <li>
+          <Link to="/" className="flip-link">
+            <span className="flip-inner">
+              <span className="front">Home</span>
+              <span className="back">Home</span>
+            </span>
+          </Link>
+        </li>
+        <li>
+          <Link to="/explore" className="flip-link">
+            <span className="flip-inner">
+              <span className="front">Explore</span>
+              <span className="back">Explore</span>
+            </span>
+          </Link>
+        </li>
+        <li>
+          <a href="#" className="flip-link">
+            <span className="flip-inner">
+              <span className="front">About</span>
+              <span className="back">About</span>
+            </span>
+          </a>
+        </li>
       </ul>
 
       <button
@@ -36,22 +58,31 @@ export default function Navbar() {
 
       <div className={`overlay-menu ${menuOpen ? "open" : ""}`}>
         <div className="overlay-logo font-zeyada font-bold text-2xl">
-            GIS Map Explorer
+          GIS Map Explorer
         </div>
         <ul className="overlay-menu__list">
           <li>
-            <Link to="/" onClick={closeMenu}>
-              Home
+            <Link to="/" onClick={closeMenu} className="flip-link">
+              <span className="flip-inner">
+                <span className="front">Home</span>
+                <span className="back">Home</span>
+              </span>
             </Link>
           </li>
           <li>
-            <Link to="/explore" onClick={closeMenu}>
-              Explore
+            <Link to="/explore" onClick={closeMenu} className="flip-link">
+              <span className="flip-inner">
+                <span className="front">Explore</span>
+                <span className="back">Explore</span>
+              </span>
             </Link>
           </li>
           <li>
-            <a href="#" onClick={closeMenu}>
-              About
+            <a href="#" onClick={closeMenu} className="flip-link">
+              <span className="flip-inner">
+                <span className="front">About</span>
+                <span className="back">About</span>
+              </span>
             </a>
           </li>
         </ul>

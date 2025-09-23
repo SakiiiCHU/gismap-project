@@ -26,8 +26,8 @@
 
 .navbar__menu li a {
   text-decoration: none;
-  color: #cfc8c8;
-  font-size: 15px;
+  color: #c2e4b9;
+  font-size: 16px;
 }
 
 /* 以下為手機螢幕設置 */
@@ -49,7 +49,7 @@
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #c2e4b9; /* 改成白色更清楚 */
+  background-color: #c2e4b9;
   border-radius: 2px;
   transition: transform 0.3s ease, top 0.3s ease, bottom 0.3s ease;
     /* Safari 相關強化 */
@@ -85,7 +85,7 @@
   width: 100vw;
   height: 0;
   overflow: hidden;
-  background-color: rgba(15, 15, 16, 0.95);
+  background-color: rgba(78, 78, 91, 0.95);
   opacity: 0;
   transition: opacity 0.3s ease, height 0.3s ease;
   z-index: 1050;
@@ -120,28 +120,103 @@
   text-align: left;                   
 }
 
-.overlay-menu__list li {
-  /* margin: 24px 0; */
-  border-bottom: 1px solid rgba(244, 239, 239, 0.1);
-}
-
 .overlay-menu__list li a {
   font-size: 24px;
   color: #c2e4b9;
   text-decoration: none;
   transition: color 0.2s;
   display: block;
-  padding: 18px 0;                    /* 左右空間靠 container 的 padding 控制 */
+  padding: 30px 0 5px 0;                    
   font-weight: 600;
   font-family: "Roboto Mono";
 }
 
-.overlay-menu__list li a:hover {
-  color: #fff;
+
+/*-------------------------------
+      overlay頁面底線hover效果  
+-------------------------------*/
+.overlay-menu__list li {
+  /* border-bottom: 1px solid #c2e4b9; */
+  position: relative;
+}
+/* 用偽元素畫底線 */
+.overlay-menu__list li a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;              /* 永遠固定在底部 */
+  width: 100%;
+  height: 1px;
+  background-color: #c2e4b9;
+  transition: background-color 0.3s ease;
 }
 
-/* 手機版樣式 */
-/* 在大螢幕還是橫向的話可以隱藏 overlay button 或調整 */
+/* hover 時，線條一起變色 */
+.overlay-menu__list li a:hover::after {
+  background-color: #fff; /* 與翻轉後字體同步 */
+}
+
+
+
+/*-------------------------------
+  統一字體屬性，避免 front/back 看起來不同字體 
+-------------------------------*/
+.navbar__menu li a,
+.overlay-menu__list li a {
+  font-weight: 600;                
+  font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  letter-spacing: 0;              
+  line-height: 1.1;                
+}
+
+/* Flip：包裹層旋轉（更穩定） */
+.flip-link {
+  display: inline-block;
+  perspective: 800px;
+  position: relative;
+}
+
+.flip-inner {
+  position: relative;
+  display: block;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(.2,.6,.2,1);
+  /* 平滑＆抗鋸齒 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.flip-link .front,
+.flip-link .back {
+  display: block;
+  backface-visibility: hidden;
+  will-change: transform;
+  /* 確保兩層完全繼承同字體屬性*/
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+.flip-link .front {
+  transform: rotateX(0deg) translateZ(0.01px);
+  color: #c2e4b9;        /* 初始顏色（依你需求可改） */
+}
+
+.flip-link .back {
+  position: absolute;
+  inset: 0;
+  transform: rotateX(-90deg) translateZ(0.01px);
+  color: #cdb3d4;           /* hover 後顏色（依你需求可改） */
+}
+
+.flip-link:hover .flip-inner {
+  transform: rotateX(90deg);
+}
+
+
+/*-------------------------------
+手機版樣式/大螢幕隱藏 overlay button
+-------------------------------*/
 @media (min-width: 769px) {
   .hamburger { display: none; }
   .overlay-menu { display: none; }
