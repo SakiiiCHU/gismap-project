@@ -1,7 +1,7 @@
 import { useRef, useEffect } from "react";
 import { createNoise3D } from "simplex-noise";
 
-export default function HomeV2({
+export default function VisualLabV2({
   FLOW = 0.00035 / 3,
   COEF_DECAY = 0.55,
   TOTAL = 34,
