@@ -1,4 +1,3 @@
-
 import { useRef, useState, useEffect } from "react";
 import {
   MapContainer,
@@ -88,64 +87,61 @@ const MapView = ({
 
   const [isLoading, setIsLoading] = useState(true);
 
+  // ------------------------------
+  // 一次性載入靜態資料/ 存進 staticData
+  // 載入成功 / 失敗會 log 出來（debug用）
+  // 載入完成後會關閉 isLoading 狀態
+  // ------------------------------
+  useEffect(() => {
+    const loadStaticData = async () => {
+      const start = Date.now();
+      try {
+        const base = import.meta.env.BASE_URL; // 自動判斷是 dev 或 build
 
-// ------------------------------
-// 一次性載入靜態資料/ 存進 staticData   
-// 載入成功 / 失敗會 log 出來（debug用）
-// 載入完成後會關閉 isLoading 狀態
-// ------------------------------
-useEffect(() => {
-  const loadStaticData = async () => {
-    const start = Date.now();
-    try {
-      const base = import.meta.env.BASE_URL; // 自動判斷是 dev 或 build
+        const [realLocationsRes, exhibitionsRes, coursesRes] =
+          await Promise.all([
+            fetch(`${base}map/real_location.json`),
+            fetch(`${base}map/exhibition.json`),
+            fetch(`${base}map/courses.json`),
+          ]);
 
-      const [realLocationsRes, exhibitionsRes, coursesRes] =
-        await Promise.all([
-          fetch(`${base}map/real_location.json`),
-          fetch(`${base}map/exhibition.json`),
-          fetch(`${base}map/courses.json`),
-        ]);
+        const realLocations = await realLocationsRes.json();
+        const exhibitions = await exhibitionsRes.json();
+        const courses = await coursesRes.json();
 
-      const realLocations = await realLocationsRes.json();
-      const exhibitions = await exhibitionsRes.json();
-      const courses = await coursesRes.json();
+        setStaticData({
+          realLocations,
+          exhibitions,
+          courses,
+        });
 
-      setStaticData({
-        realLocations,
-        exhibitions,
-        courses,
-      });
+        // 確保至少顯示 1.5 秒
+        const elapsed = Date.now() - start;
+        const delay = Math.max(0, 1000 - elapsed);
+        setTimeout(() => setIsLoading(false), delay);
+      } catch (error) {
+        console.error("Error loading static JSON data:", error);
+        setIsLoading(false); // 出錯也要關掉 loading
+      }
+    };
 
-      // 確保至少顯示 1.5 秒
-      const elapsed = Date.now() - start;
-      const delay = Math.max(0, 1000 - elapsed);
-      setTimeout(() => setIsLoading(false), delay);
+    loadStaticData();
+  }, []);
 
-    } catch (error) {
-      console.error("Error loading static JSON data:", error);
-      setIsLoading(false); // 出錯也要關掉 loading
-    }
-  };
-
-  loadStaticData();
-}, []);
-
-
-// ------------------------------
-// 偵測篩選條件變動 → 清空地圖上舊有的 marker / popup
-// 清空邏輯需放在最上層
-//[上層 useEffect]
-//└── 清空 locations + 清空 marker/popup DOM
-//    ｜
-//    ▼
-//[中層 useEffect]
-//└── 根據 shortestPaths → 建立新 locations
-//    ｜
-//    ▼
-//[下層渲染區]
-//└── renderMarkers(renderStations...) → 根據 locations 繪圖
-// ------------------------------
+  // ------------------------------
+  // 偵測篩選條件變動 → 清空地圖上舊有的 marker / popup
+  // 清空邏輯需放在最上層
+  //[上層 useEffect]
+  //└── 清空 locations + 清空 marker/popup DOM
+  //    ｜
+  //    ▼
+  //[中層 useEffect]
+  //└── 根據 shortestPaths → 建立新 locations
+  //    ｜
+  //    ▼
+  //[下層渲染區]
+  //└── renderMarkers(renderStations...) → 根據 locations 繪圖
+  // ------------------------------
 
   // Clear locations when filter criteria changes
   useEffect(() => {
@@ -183,13 +179,12 @@ useEffect(() => {
     prevSelectedDistrict.current = selectedDistrict;
   }, [selectedMRT, activeFilterType, selectedStation, selectedDistrict]);
 
-
   // ------------------------------
-//   根據 shortestPaths 產生 locations（selected by mRT）
-// - 行政區模式會略過此段
-// - 用 end_name (locat_id) 從 staticData.realLocations 篩出場地
-// - 再依 selectedType 附上對應的展覽或課程資料
-// ------------------------------
+  //   根據 shortestPaths 產生 locations（selected by mRT）
+  // - 行政區模式會略過此段
+  // - 用 end_name (locat_id) 從 staticData.realLocations 篩出場地
+  // - 再依 selectedType 附上對應的展覽或課程資料
+  // ------------------------------
 
   useEffect(() => {
     // Don't fetch if we're in district filter mode
@@ -199,15 +194,15 @@ useEffect(() => {
       return;
 
     const locatIds = shortestPaths.features.map(
-      (path) => path.properties.end_name
+      (path) => path.properties.end_name,
     );
 
     if (locatIds.length === 0) return;
 
     console.log(
       ` Processing locations for IDs: ${locatIds.join(
-        ","
-      )}, with type: ${selectedType}`
+        ",",
+      )}, with type: ${selectedType}`,
     );
 
     // Process static data instead of API call
@@ -215,7 +210,7 @@ useEffect(() => {
       try {
         // Filter real locations by the location IDs from shortest paths
         const filteredRealLocations = staticData.realLocations.filter((loc) =>
-          locatIds.includes(loc.locat_id.toString())
+          locatIds.includes(loc.locat_id.toString()),
         );
 
         // Join with exhibitions or courses based on selectedType
@@ -229,7 +224,7 @@ useEffect(() => {
           if (selectedType === "exhibition") {
             // Find exhibitions for this location
             const locationExhibitions = staticData.exhibitions.filter(
-              (exhibition) => exhibition.locat_id === location.locat_id
+              (exhibition) => exhibition.locat_id === location.locat_id,
             );
             locationData.exhibitions = locationExhibitions;
 
@@ -243,7 +238,7 @@ useEffect(() => {
           } else if (selectedType === "courses") {
             // Find courses for this location
             const locationCourses = staticData.courses.filter(
-              (course) => course.locat_id === location.locat_id
+              (course) => course.locat_id === location.locat_id,
             );
             locationData.courses = locationCourses;
 
@@ -278,36 +273,34 @@ useEffect(() => {
   //   console.log("Current filteredLocations prop:", filteredLocations);
   // }, [locations, filteredLocations]);
 
-
   // 修改 selectedLocationId 的 useEffect 處理邏輯
-// ------------------------------
-//    根據 selectedLocationId 聚焦地圖
-// - 若為行政區模式 → 從 filteredLocations 找資料
-// - 若為捷運模式 → 從 locations 找資料（來自 shortestPaths）
-// - 飛到該位置並打開 popup，找不到 marker 時動態建立臨時 marker
-// ------------------------------
+  // ------------------------------
+  //    根據 selectedLocationId 聚焦地圖
+  // - 若為行政區模式 → 從 filteredLocations 找資料
+  // - 若為捷運模式 → 從 locations 找資料（來自 shortestPaths）
+  // - 飛到該位置並打開 popup，找不到 marker 時動態建立臨時 marker
+  // ------------------------------
 
   useEffect(() => {
     if (!selectedLocationId) return;
 
     console.log(
-      `Selected location ID: ${selectedLocationId}, Type: ${selectedType}, Filter: ${activeFilterType}`
+      `Selected location ID: ${selectedLocationId}, Type: ${selectedType}, Filter: ${activeFilterType}`,
     );
 
     let location;
 
-      // 根據 activeFilterType 決定從哪裡找資料
+    // 根據 activeFilterType 決定從哪裡找資料
     if (activeFilterType === "district") {
       // 對於行政區篩選，只需要比對 locat_id，不需要檢查 type
       location = filteredLocations?.find(
-        (loc) => loc.locat_id.toString() === selectedLocationId.toString()
+        (loc) => loc.locat_id.toString() === selectedLocationId.toString(),
       );
       console.log("Looking in filteredLocations for district:", location);
     } else {
-
       // 對於捷運篩選，檢查 locat_id 和 type
       location = locations.find(
-        (loc) => loc.locat_id.toString() === selectedLocationId.toString()
+        (loc) => loc.locat_id.toString() === selectedLocationId.toString(),
       );
       console.log("Looking in locations for MRT:", location);
     }
@@ -328,7 +321,7 @@ useEffect(() => {
         if (markerElement) {
           const markerInstance = marker._leaflet_id
             ? Object.values(mapRef.current._layers).find(
-                (layer) => layer._leaflet_id === marker._leaflet_id
+                (layer) => layer._leaflet_id === marker._leaflet_id,
               )
             : null;
 
@@ -370,18 +363,18 @@ useEffect(() => {
         const icon = hasExhibitions
           ? exhibitionIcon
           : hasCourses
-          ? courseIcon
-          : L.divIcon({
-              className: "custom-marker",
-              html: `<div class="marker-pin"></div>`,
-              iconSize: [30, 30],
-              iconAnchor: [15, 30],
-            });
+            ? courseIcon
+            : L.divIcon({
+                className: "custom-marker",
+                html: `<div class="marker-pin"></div>`,
+                iconSize: [30, 30],
+                iconAnchor: [15, 30],
+              });
 
         // 創建臨時 marker 並開啟 popup
         setTimeout(() => {
           const tempMarker = L.marker([latitude, longitude], { icon }).addTo(
-            mapRef.current
+            mapRef.current,
           );
 
           // 創建 popup 內容
@@ -393,8 +386,8 @@ useEffect(() => {
           titleType.textContent = hasExhibitions
             ? "Exhibition"
             : hasCourses
-            ? "Course"
-            : "Location";
+              ? "Course"
+              : "Location";
           popupContent.appendChild(titleType);
 
           if (location.name) {
@@ -408,7 +401,7 @@ useEffect(() => {
             const datesDiv = document.createElement("div");
             datesDiv.className = "popup-dates";
             datesDiv.textContent = `${formatDate(
-              location.startdate
+              location.startdate,
             )} - ${formatDate(location.enddate)}`;
             popupContent.appendChild(datesDiv);
           }
@@ -442,7 +435,7 @@ useEffect(() => {
               const dates = document.createElement("div");
               dates.className = "exhibition-dates";
               dates.textContent = `${formatDate(
-                exhibition.e_startdate || exhibition.startdate
+                exhibition.e_startdate || exhibition.startdate,
               )} - ${formatDate(exhibition.e_enddate || exhibition.enddate)}`;
               item.appendChild(name);
               item.appendChild(dates);
@@ -472,7 +465,7 @@ useEffect(() => {
               const dates = document.createElement("div");
               dates.className = "course-dates";
               dates.textContent = `${formatDate(
-                course.c_startdate || course.startdate
+                course.c_startdate || course.startdate,
               )} - ${formatDate(course.c_enddate || course.enddate)}`;
               item.appendChild(name);
               item.appendChild(dates);
@@ -501,10 +494,10 @@ useEffect(() => {
   ]); // 監聽 activeFilterType
 
   // ------------------------------
-//  根據目前資料自動縮放地圖視角
-// - 自訂 useFitBounds hook
-// - 不處理資料，只負責移動畫面位置
-// ------------------------------
+  //  根據目前資料自動縮放地圖視角
+  // - 自訂 useFitBounds hook
+  // - 不處理資料，只負責移動畫面位置
+  // ------------------------------
   // Use the custom fitBounds hook
   useFitBounds({
     mapRef,
@@ -519,13 +512,12 @@ useEffect(() => {
     activeFilterType,
   });
 
-
   // ------------------------------
-//  樣式與互動控制層
-// - 定義 MRT 路線 / 站點 / 行政區 多種狀態樣式
-// - styleRoutes 依 hover / select 狀態回傳當前樣式
-// - onEachRoute 綁定 hover / click 事件（透過透明 hit 線擴大點擊範圍）
-// ------------------------------
+  //  樣式與互動控制層
+  // - 定義 MRT 路線 / 站點 / 行政區 多種狀態樣式
+  // - styleRoutes 依 hover / select 狀態回傳當前樣式
+  // - onEachRoute 綁定 hover / click 事件（透過透明 hit 線擴大點擊範圍）
+  // ------------------------------
   // Base styles
   // 路線基本樣式routeStyle其實用不到可刪
   const routeStyle = {
@@ -632,7 +624,6 @@ useEffect(() => {
     const isHovered = hoveredRoute === feature.properties.MRTCODE;
     const baseColor = getLineColor(feature.properties.MRTCODE);
 
-
     if (isHovered) {
       return {
         ...hoverStyle,
@@ -649,23 +640,28 @@ useEffect(() => {
 
     // return routeStyle;
     //  讓MRT初始就是彩色但是比較淺（Ｅ6是十六進位的透明度90%）
-      return {
-        ...routeStyle,
-        color: baseColor + "E6" , 
-      };
+    return {
+      ...routeStyle,
+      color: baseColor + "E6",
+    };
   };
 
   const onEachRoute = (feature, layer) => {
     const addHitArea = () => {
-      const hit = L.polyline(layer.getLatLngs(), { ...routeBuffer, interactive: true })
-        .addTo(layer._map);
-  
+      const hit = L.polyline(layer.getLatLngs(), {
+        ...routeBuffer,
+        interactive: true,
+      }).addTo(layer._map);
+
       // 讓 hit 區在最上層，容易點到
       hit.bringToFront();
-  
+
       const enter = () => {
         setHoveredRoute(feature.properties.MRTCODE);
-        layer.setStyle({ ...hoverStyle, color: getLineColor(feature.properties.MRTCODE) });
+        layer.setStyle({
+          ...hoverStyle,
+          color: getLineColor(feature.properties.MRTCODE),
+        });
       };
       const leave = () => {
         setHoveredRoute(null);
@@ -674,7 +670,7 @@ useEffect(() => {
       const select = () => {
         onRouteClick(feature.properties.MRTCODE);
       };
-  
+
       // 滑鼠 + 觸控兩種事件
       hit.on({
         mouseover: enter,
@@ -683,28 +679,27 @@ useEffect(() => {
         touchstart: enter,
         touchend: leave,
       });
-  
+
       // 清理
       layer.on("remove", () => {
         if (layer._map) layer._map.removeLayer(hit);
       });
     };
-  
+
     // layer 加到地圖後，才能拿到 layer._map
     if (layer._map) addHitArea();
     else layer.on("add", addHitArea);
-  
+
     layer.bindPopup(feature.properties.MRTCODE);
   };
-  
 
-//將目前 selectedLineStations（點選某條捷運線後從父層傳入的站點陣列）轉換成 GeoJSON 格式
-//這是之後 renderStations() 傳給 <GeoJSON data={stationGeoJSON}> 用的資料來源
-// 依賴條件：
-//前提是使用者已點選某條捷運線 → 才會有 selectedLineStations
-// 和前面流程關係：
-//屬於 選取 MRT 線後才會顯示的衍生資料
-//並不是全域 marker（那些是 locations / filteredLocations）
+  //將目前 selectedLineStations（點選某條捷運線後從父層傳入的站點陣列）轉換成 GeoJSON 格式
+  //這是之後 renderStations() 傳給 <GeoJSON data={stationGeoJSON}> 用的資料來源
+  // 依賴條件：
+  //前提是使用者已點選某條捷運線 → 才會有 selectedLineStations
+  // 和前面流程關係：
+  //屬於 選取 MRT 線後才會顯示的衍生資料
+  //並不是全域 marker（那些是 locations / filteredLocations）
   // Create GeoJSON for stations
   const stationGeoJSON = {
     type: "FeatureCollection",
@@ -780,64 +775,63 @@ useEffect(() => {
     </Pane>
   );
 
+  // 畫出選中 MRT Line 的所有 Station（放在比 routes 更高的 pane）
+  const renderStations = () => (
+    <Pane name="stations" style={{ zIndex: 500 }}>
+      {selectedLineStations && selectedLineStations.length > 0 && (
+        <GeoJSON
+          pane="stations" // 讓 GeoJSON 產生的所有子圖層預設都進 stations pane
+          key={`stations-${selectedMRT}-${JSON.stringify(selectedLineStations)}`}
+          data={stationGeoJSON}
+          pointToLayer={(feature, latlng) => {
+            // 確保是 CircleMarker（Path 類型），才有 setStyle
+            const baseStyle = {
+              ...getStationStyle(feature.properties.id),
+              radius: getStationStyle(feature.properties.id).radius ?? 8,
+              pane: "stations",
+              // 避免點到站時事件冒泡到線（或地圖）造成誤觸
+              bubblingMouseEvents: false,
+            };
 
-// 畫出選中 MRT Line 的所有 Station（放在比 routes 更高的 pane）
-const renderStations = () => (
-  <Pane name="stations" style={{ zIndex: 500 }}>
-    {selectedLineStations && selectedLineStations.length > 0 && (
-      <GeoJSON
-        pane="stations"   // 讓 GeoJSON 產生的所有子圖層預設都進 stations pane
-        key={`stations-${selectedMRT}-${JSON.stringify(selectedLineStations)}`}
-        data={stationGeoJSON}
-        pointToLayer={(feature, latlng) => {
-          // 確保是 CircleMarker（Path 類型），才有 setStyle
-          const baseStyle = {
-            ...getStationStyle(feature.properties.id),
-            radius: (getStationStyle(feature.properties.id).radius ?? 8),
-            pane: "stations",
-            // 避免點到站時事件冒泡到線（或地圖）造成誤觸
-            bubblingMouseEvents: false,
-          };
+            const marker = L.circleMarker(latlng, baseStyle);
 
-          const marker = L.circleMarker(latlng, baseStyle);
+            // 防守：只在仍在地圖上時才 setStyle，避免 unmount 時報錯
+            const safeSet = (s) => {
+              if (marker && marker.setStyle && marker._map) marker.setStyle(s);
+            };
 
-          // 防守：只在仍在地圖上時才 setStyle，避免 unmount 時報錯
-          const safeSet = (s) => {
-            if (marker && marker.setStyle && marker._map) marker.setStyle(s);
-          };
+            marker.on({
+              mouseover: () => {
+                if (!shouldHighlightStation(feature.properties.id)) {
+                  safeSet({
+                    ...hoverStationStyle,
+                    radius: hoverStationStyle.radius ?? baseStyle.radius + 2,
+                    pane: "stations",
+                  });
+                }
+              },
+              mouseout: () => {
+                if (!shouldHighlightStation(feature.properties.id)) {
+                  safeSet(baseStyle);
+                }
+              },
+              click: () => {
+                // 👉 這裡保持原本流程：選到站 → 交給 onStationClick
+                // 你現有的 useFitBounds 會在外面依 selectedStation 反應視角
+                onStationClick(feature.properties.id);
+              },
+            });
 
-          marker.on({
-            mouseover: () => {
-              if (!shouldHighlightStation(feature.properties.id)) {
-                safeSet({
-                  ...hoverStationStyle,
-                  radius: hoverStationStyle.radius ?? baseStyle.radius + 2,
-                  pane: "stations",
-                });
-              }
-            },
-            mouseout: () => {
-              if (!shouldHighlightStation(feature.properties.id)) {
-                safeSet(baseStyle);
-              }
-            },
-            click: () => {
-              // 👉 這裡保持原本流程：選到站 → 交給 onStationClick
-              // 你現有的 useFitBounds 會在外面依 selectedStation 反應視角
-              onStationClick(feature.properties.id);
-            },
-          });
+            marker.bindPopup(
+              `${feature.properties.name}<br>${feature.properties.name_english}`,
+            );
 
-          marker.bindPopup(
-            `${feature.properties.name}<br>${feature.properties.name_english}`
-          );
-
-          return marker;
-        }}
-      />
-    )}
-  </Pane>
-);
+            return marker;
+          }}
+        />
+      )}
+    </Pane>
+  );
 
   // Render exhibition/course markers
   const renderLocationMarkers = () => {
@@ -858,8 +852,8 @@ const renderStations = () => (
       activeFilterType === "mrt"
         ? locations
         : activeFilterType === "district"
-        ? filteredLocations
-        : [];
+          ? filteredLocations
+          : [];
 
     if (!locationsToShow.length) {
       // console.log("No locations to render markers for");
@@ -892,9 +886,11 @@ const renderStations = () => (
               loc.exhibitions && loc.exhibitions.length > 0;
             const hasCourses = loc.courses && loc.courses.length > 0;
 
-            {/* console.log(
+            {
+              /* console.log(
               `Rendering marker for location ${loc.locat_id} at [${loc.latitude}, ${loc.longitude}]`
-            ); */}
+            ); */
+            }
 
             return (
               <Marker
@@ -904,13 +900,13 @@ const renderStations = () => (
                   hasExhibitions
                     ? exhibitionIcon
                     : hasCourses
-                    ? courseIcon
-                    : L.divIcon({
-                        className: "custom-marker",
-                        html: `<div class="marker-pin"></div>`,
-                        iconSize: [30, 30],
-                        iconAnchor: [15, 30],
-                      })
+                      ? courseIcon
+                      : L.divIcon({
+                          className: "custom-marker",
+                          html: `<div class="marker-pin"></div>`,
+                          iconSize: [30, 30],
+                          iconAnchor: [15, 30],
+                        })
                 }
                 eventHandlers={{
                   // Add a click handler to update selectedLocationId
@@ -932,8 +928,8 @@ const renderStations = () => (
                       {hasExhibitions
                         ? "Exhibition"
                         : hasCourses
-                        ? "Course"
-                        : "Location"}
+                          ? "Course"
+                          : "Location"}
                     </h3>
 
                     {/* Display name if it exists */}
@@ -967,11 +963,12 @@ const renderStations = () => (
                               </div>
                               <div className="exhibition-dates">
                                 {formatDate(
-                                  exhibition.e_startdate || exhibition.startdate
+                                  exhibition.e_startdate ||
+                                    exhibition.startdate,
                                 )}{" "}
                                 -{" "}
                                 {formatDate(
-                                  exhibition.e_enddate || exhibition.enddate
+                                  exhibition.e_enddate || exhibition.enddate,
                                 )}
                               </div>
                             </div>
@@ -995,7 +992,7 @@ const renderStations = () => (
                               </div>
                               <div className="course-dates">
                                 {formatDate(
-                                  course.c_startdate || course.startdate
+                                  course.c_startdate || course.startdate,
                                 )}{" "}
                                 -{" "}
                                 {formatDate(course.c_enddate || course.enddate)}
@@ -1040,7 +1037,7 @@ const renderStations = () => (
 
           // Find location details if available
           const locationDetails = locations.find(
-            (loc) => loc.locat_id.toString() === locatId.toString()
+            (loc) => loc.locat_id.toString() === locatId.toString(),
           );
 
           return (
@@ -1110,7 +1107,7 @@ const renderStations = () => (
 
   return (
     <div className="map-view">
-     {isLoading && <LoadingOverlay text="Loading map..." />}
+      {isLoading && <LoadingOverlay text="Loading map..." />}
       <MapContainer
         center={center}
         zoom={12}
@@ -1122,20 +1119,24 @@ const renderStations = () => (
         <ZoomControl position="bottomright" />
         <LayersControl position="topright">
           {/* Base layers */}
-          <LayersControl.BaseLayer name="Carto Dark (dimmed)">
+
+          {/* Soft Light - Default */}
+          {/* MapView.css有彩度修改*/}
+          <LayersControl.BaseLayer checked name="Light">
             <TileLayer
-              attribution='&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-              url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
-              subdomains={["a", "b", "c", "d"]}
-              maxZoom={19}
-              opacity={0.8} //  降低不透明度，視覺會變柔和灰黑
+              url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+              className="basemap-soft"
             />
           </LayersControl.BaseLayer>
 
-          <LayersControl.BaseLayer checked name="Light">
+          {/* Minimal Dark */}
+          <LayersControl.BaseLayer name="Dark">
             <TileLayer
-              attribution='&copy; <a href="https://carto.com/">CartoDB</a>'
-              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+              url="https://basemap.queeniemella.cc/tiles/countries/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://queeniemella.cc">queeniemella</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+              maxZoom={19}
+              opacity={0.85} //  降低不透明度，視覺會變柔和灰黑
             />
           </LayersControl.BaseLayer>
 

@@ -346,6 +346,14 @@
   justify-content: center;
 }
 
+/* LayersControl.BaseLayer TileLayer 彩度修改*/
+.basemap-soft .leaflet-tile {
+  filter: saturate(40%)
+          brightness(1.01)
+          contrast(0.6);
+}
+
+
 @media (max-width: 768px) {
   .leaflet-bottom.leaflet-right {
     bottom: 50px;
