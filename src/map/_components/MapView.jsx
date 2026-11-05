@@ -1125,8 +1125,10 @@ const MapView = ({
           <LayersControl.BaseLayer checked name="Light">
             <TileLayer
               url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+              attribution="&copy; OpenStreetMap contributors"
               className="basemap-soft"
+              opacity={0.55}
+              maxZoom={19}
             />
           </LayersControl.BaseLayer>
 
@@ -1136,7 +1138,7 @@ const MapView = ({
               url="https://basemap.queeniemella.cc/tiles/countries/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://queeniemella.cc">queeniemella</a> | &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               maxZoom={19}
-              opacity={0.85} //  降低不透明度，視覺會變柔和灰黑
+              // opacity={0.85} //  降低不透明度，視覺會變柔和灰黑
             />
           </LayersControl.BaseLayer>
 

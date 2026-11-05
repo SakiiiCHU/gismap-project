@@ -348,11 +348,10 @@
 
 /* LayersControl.BaseLayer TileLayer 彩度修改*/
 .basemap-soft .leaflet-tile {
-  filter: saturate(40%)
-          brightness(1.01)
-          contrast(0.6);
+  filter: saturate(60%)
+          /* brightness(1.01) */
+          /* contrast(0.9); */
 }
-
 
 @media (max-width: 768px) {
   .leaflet-bottom.leaflet-right {
